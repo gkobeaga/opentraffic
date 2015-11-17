@@ -1,0 +1,48 @@
+<template name="app">
+	<div id="top_panel">
+		{{> top_panel}}
+	</div>
+
+	<div id="left_panels">
+		<div class="left_panel_content">
+			{{#if show_alerts_panel}}
+				{{> alerts_panel}}
+			{{/if}}
+		</div>
+
+    <div class="left_panel_content">
+			{{#if show_stats_panel}}
+				{{> stats_panel}}
+			{{/if}}
+		</div>
+
+		<div class="left_panel_content">
+			{{#if show_settings_panel}}
+				{{> settings_panel}}
+			{{/if}}
+		</div>
+
+		<div class="left_panel_content">
+			{{#if show_help_panel}}
+				{{> help_panel}}
+			{{/if}}
+		</div>
+
+		<div class="left_panel_content">
+			{{> navigation_panel}}
+		</div>
+
+		<div style="clear:both;"></div>
+	</div>
+
+	<div id="right_panels">
+
+    {{> right_panel }}
+
+    <!--	{{> popup_panel}}-->
+	</div>
+
+  <div id="map_body">
+    {{> map }}
+  </div>
+</template>

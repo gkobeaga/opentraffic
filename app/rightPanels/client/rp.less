@@ -1,0 +1,48 @@
+@import (reference) url("/lib/client/custom.bootstrap.import.less");
+
+#right_panel {
+    float:right;
+    background-color: @panel_bg;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    z-index: 1;
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -ms-user-select: text;
+    user-select: text;
+    pointer-events: auto;
+    height:100%;
+}
+
+.rp_content {
+	padding: @panel_padding;
+	min-width: 175px;
+	max-width: 250px;
+}
+
+#rp_info_hex {
+	max-width:200px;
+}
+
+#rp_changeSpecialization {
+	max-width:250px;
+}
+
+
+.rpNameContainer {
+	.rpNameType {
+		color: @text-color-light;
+		font-size:80%;
+	}
+
+	.rpName {
+		float:left;
+		font-size:150%;
+		padding-right:8px;
+	}
+
+	.rpEditName {
+		float:right;
+	}
+}

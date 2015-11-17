@@ -1,0 +1,228 @@
+<template name="rp_info_castle">
+	<div class="rp_content" id="rp_info_castle">
+		{{> rp_closeButton}}
+
+		{{#if castleInfoLoaded}}
+			<div class="panel panel-default" style="margin-top:0;">
+				{{#if is_owner}}
+
+					<div class="panel-body">
+						<div class="rpNameContainer">
+							<div class="rpNameType">Castle</div>
+							<div class="rpName">{{name}}</div>
+							<div class="rpEditName">{{> edit_name_button}}</div>
+							<div style="clear:both;"></div>
+						</div>
+					</div>
+
+					<table class="table table-condensed table-striped">
+						<tbody>
+							<tr>
+								<td>Vassals</td>
+								<td style="text-align:right;">{{round user.num_allies_below}}</td>
+							</tr>
+							<tr>
+								<td>Networth</td>
+								<td style="text-align:right;">{{round user.net.total}}</td>
+							</tr>
+							<tr>
+								<td>Income</td>
+								<td style="text-align:right;">{{round user.income}}</td>
+							</tr>
+							<tr>
+								<td>Lost Soldiers</td>
+								<td style="text-align:right;">{{round user.losses_num}}</td>
+							</tr>
+						</tbody>
+					</table>
+
+				{{else}}
+
+					<div class="panel-body">
+						<div class="rpNameContainer">
+							<div class="rpNameType">Castle</div>
+							<div class="rpName">{{name}}</div>
+							<div style="clear:both;"></div>
+							<div style="margin-top:8px;">
+								<span class="light_text" style="">Lord</span> {{username}}
+							</div>
+						</div>
+					</div>
+
+					{{#if rightPanelUserReady}}
+						<table class="table table-condensed table-striped">
+							<tbody>
+								<tr>
+									<td>Vassals</td>
+									<td style="text-align:right;">{{round user.num_allies_below}}</td>
+								</tr>
+								<tr>
+									<td>Networth</td>
+									<td style="text-align:right;">{{round user.net.total}}</td>
+								</tr>
+								<tr>
+									<td>Income</td>
+									<td style="text-align:right;">{{round user.income}}</td>
+								</tr>
+								<tr>
+									<td>Lost Soldiers</td>
+									<td style="text-align:right;">{{round user.losses_num}}</td>
+								</tr>
+								{{#if isPro}}
+									{{#if daysSinceUserActive}}
+										<tr>
+											<td>Last Active</td>
+											<td style="text-align:right;">{{daysSinceUserActive}}</td>
+										</tr>
+									{{/if}}
+								{{/if}}
+							</tbody>
+						</table>
+					{{/if}}
+
+				{{/if}}
+			</div>
+
+			{{#if unitRelationType}}
+				<div class="panel panel-default panel-body" style="text-align:center;">
+					{{username}} is your {{unitRelationType}}
+				</div>
+			{{/if}}
+
+			{{#unless is_owner}}
+				{{#if rightPanelTreeReady}}
+					{{> rightPanelTree}}
+				{{/if}}
+			{{/unless}}
+
+
+			{{#if showUnverifiedEmailAlert}}
+				<div class="panel pandel-default panel-body" style="text-align:center;">
+					Email not yet verified.  {{username}} isn't receiving income.
+				</div>
+			{{/if}}
+
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					Castle Garrison
+				</div>
+				{{#if no_soldiers}}
+					<div class="panel-body">
+						Empty
+					</div>
+				{{else}}
+					<table class="table table-condensed table-striped">
+						<tbody>
+							{{#each s.army.types}}
+								{{#if hasSoldierType}}
+								<tr>
+									<td>{{capitalize this}}</td>
+									<td style="text-align:right;">{{round numSoldierType}}</td>
+								</tr>
+								{{/if}}
+							{{/each}}
+
+							<tr>
+								<td>Defense Power</td>
+								<td style="text-align:right;">{{round defensePower}}</td>
+							</tr>
+						</tbody>
+					</table>
+				{{/if}}
+			</div>
+
+			{{#if is_vassal}}
+				<div class="pad_group">
+					<button type="button" class="btn btn-sm btn-primary btn-block" id="send_gold_button">Send Gold to {{username}}</button>
+					<button type="button" class="btn btn-sm btn-primary btn-block" id="hire_army_from_castle_button">Hire Soldiers for {{username}}</button>
+				</div>
+			{{/if}}
+
+
+			{{#if is_owner}}
+				<div class="pad_group">
+					<button type="button" class="btn btn-sm btn-primary btn-block" id="hire_army_from_castle_button">Hire Soldiers</button>
+
+					<button type="button" class="btn btn-sm btn-primary btn-block" id="send_army_from_castle_button" disabled="{{no_soldiers}}">Send Army from Castle</button>
+				</div>
+
+
+				{{#if more_than_one_owned_image}}
+					<div class="panel panel-default">
+						<div class="panel-heading">
+							Set Castle Image
+						</div>
+						<div class="panel-body">
+							{{#each owned_images}}
+								<div class="radio">
+									<label>
+										<input type="radio" class="image_radios" name="image_radios" value="{{this}}" {{image_radio_is_checked}}>
+										{{image_name this}}
+									</label>
+								</div>
+							{{/each}}
+						</div>
+					</div>
+				{{/if}}
+
+			{{/if}}		<!-- is owner -->
+
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					Specialization
+				</div>
+				<div class="panel-body">
+
+					{{#if user.specialization}}
+						{{#if user.specializationChanging}}
+							Researching
+						{{else}}
+							Skilled in
+						{{/if}}
+
+						{{user.specialization}}.
+					{{else}}
+						No specialization.
+					{{/if}}
+
+					{{#if is_owner}}
+						<br><br>
+						<button type="button" class="btn btn-sm btn-primary btn-block" id="changeSpecializationButton">Change Specialization</button>
+					{{/if}}
+				</div>
+			</div>
+
+
+			<div class="panel panel-default panel-body">
+				{{#unless is_owner}}
+					<button class="btn btn-primary btn-block" id="reportPlayerButton">Report Player</button>
+					<button class="btn btn-primary btn-block" id="createChatButton">Create chatroom</button>
+				{{/unless}}
+				{{> infoPanelMarkerButton}}
+			</div>
+
+		{{else}}
+			<div class="pad_group" style="text-align:center;">
+				<i class="fa fa-refresh fa-spin"></i>
+				&nbsp;
+				Loading
+			</div>
+		{{/if}}
+
+
+		{{#if battleInfoReady}}
+			{{#if battle}}
+				<div class="panel panel-default">
+					<div class="panel-heading">
+						Battle
+					</div>
+					<div class="panel-body">
+						{{> battleReport battle}}
+					</div>
+				</div>
+			{{/if}}
+		{{/if}}
+
+	</div>
+</template>

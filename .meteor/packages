@@ -1,0 +1,54 @@
+# Meteor packages used by this project, one per line.
+# Check this file (and the other files in this directory) into your repository.
+#
+# 'meteor add' and 'meteor remove' will edit this file for you,
+# but you can also edit it by hand.
+
+jquery
+less
+random
+accounts-password
+facts
+#email
+accounts-ui
+#mrt:cookies@0.3.0
+#danimal:accounts-templates
+#danimal:hx
+iron:router
+#monbro:mongodb-mapreduce-aggregation
+meteorhacks:aggregate
+underscore
+reactive-var
+momentjs:moment
+meteor-platform
+nemo64:bootstrap
+fortawesome:fontawesome
+danimal:readymanager
+#danimal:mapmover
+#accounts-google
+#accounts-facebook
+#fastclick
+meteorhacks:subs-manager
+d3js:d3
+mrt:topojson
+#mrgalaxy:stripe
+mizzao:user-status
+wizonesolutions:underscore-string
+pfafman:nvd3
+#datariot:ganalytics
+danimal:cue
+http
+#meteorhacks:kadira
+#danimal:svgexport
+#ongoworks:spiderable
+#meteorhacks:sikka
+#dominus-minimap
+#dominus-battles
+#dominus-mapbaker
+#dominus-tree
+#dominus-markers
+peerlibrary:xml2js
+mrt:iconv-lite
+webapp
+aldeed:http
+mrt:iconv

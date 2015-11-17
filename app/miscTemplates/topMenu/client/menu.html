@@ -1,0 +1,70 @@
+<template name="menu">
+	<div id="menu">
+		<ul class="nav nav-pills">
+
+			<li class="{{alerts_active}}">
+				<a href="#" id="show_alerts_panel_button" data-toggle="tooltip" data-placement="bottom" title="Alerts">
+					{{#if smallScreen}}
+						<i class="fa fa-bullhorn fa-lg"></i>
+					{{else}}
+						Alerts
+					{{/if}}
+					<span class="badge">{{#if numUnreadAlerts}}{{numUnreadAlerts}}{{/if}}</span>
+				</a>
+			</li>
+
+			<li class="{{stats_active}}">
+				<a href="#" id="show_stats_panel_button" data-toggle="tooltip" data-placement="bottom" title="Graphs">
+					{{#if smallScreen}}
+					<i class="fa fa-line-chart fa-lg"></i>
+					{{else}}
+						Graphs
+					{{/if}}
+				</a>
+			</li>
+
+
+			<li class="{{settings_active}}">
+				<a href="#" id="show_settings_panel_button" data-toggle="tooltip" data-placement="bottom" title="Settings">
+					{{#if smallScreen}}
+						<i class="fa fa-wrench fa-lg"></i>
+					{{else}}
+						Settings
+					{{/if}}
+				</a>
+			</li>
+
+			<li class="{{settings_active}}">
+				<a href="#" id="show_settings_panel_button" data-toggle="tooltip" data-placement="bottom" title="Settings">
+					{{#if smallScreen}}
+						<i class="fa fa-wrench fa-lg"></i>
+					{{else}}
+						OpenCPU
+					{{/if}}
+				</a>
+			</li>
+
+			<li class="{{settings_active}}">
+				<a href="#" id="show_settings_panel_button" data-toggle="tooltip" data-placement="bottom" title="Settings">
+					{{#if smallScreen}}
+						<i class="fa fa-wrench fa-lg"></i>
+					{{else}}
+						Source
+					{{/if}}
+				</a>
+			</li>
+
+			<li class="{{help_active}}">
+				<a href="#" id="show_help_panel_button" data-toggle="tooltip" data-placement="bottom" title="Help">
+					{{#if smallScreen}}
+						<i class="fa fa-question fa-lg"></i>
+					{{else}}
+						Help
+					{{/if}}
+				</a>
+			</li>
+
+
+		</ul>
+	</div>
+</template>

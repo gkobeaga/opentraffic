@@ -1,0 +1,42 @@
+
+<template name="alerts_roadSafety">
+
+    <div class="alertTitle pad_group">
+        <div style="font-size:120%;">
+            <table style="width:100%;">
+                <tbody>
+                    <tr>
+                        <td style="text-align:right;">
+                            {{date_calendar fecha}}
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        {{#each alerts}}
+        <div>
+            <a href="" data-incident_id="{{_id}}"
+            data-road="{{road}}" data-type="{{type}}"
+            data-longitude="{{longitude}}" data-latitude="{{latitude}}"
+            class="userLink light_text">
+
+            &bull;&nbsp;
+            <!--{{causa}} {{nombre}}-->
+            [{{date_inputDate date}}, {{date_inputTime date}}]
+            {{road}} {{sense}} ({{town}}): 
+            {{cause}}. {{level}}.
+            </a>
+          </div>
+        {{/each}}
+    </div>
+
+
+    <div class="pad_group" style="margin:10px 0px;">
+        <button type="button" class="btn btn-primary btn-block" id="showMoreButton">Show More</button>
+
+<a href="http://opendata.euskadi.eus/datuak/-/euskadiko-trafiko-gorabeherak/" target="new"
+  class="btn btn-primary btn-block">OpenData Euskadi</a>
+    </div>
+</template>
