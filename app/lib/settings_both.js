@@ -6,7 +6,7 @@ s.province = {};
 s.incident = {};
 
 s.province.types = [ 'Araba', 'Bizkaia', 'Gipuzkoa'];
-s.incident.types = [ 'accident', 'road_safety', 'roadwork', 'sport', 'port','winter_road','other_incidents'];
+s.incident.types = [ 'accident', 'road_safety', 'roadwork', 'sport', 'port','weather','winter_road','other_incidents'];
 
 s.market = {};
 s.resource = {};
