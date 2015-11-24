@@ -30,11 +30,13 @@ Template.stats_panel.rendered = function() {
 			})
 
       var now = new Date()
-      var hours = _.range(now.getHours(),now.getHours() +24)
+      var hours = _.range(now.getHours()+1,now.getHours() +25)
                    .map(function(hour) {return hour %24})
 
+      console.log(hours)
 			_.each(s.incident.types, function(type) {
         _.each(hours, function(hour) {
+      console.log(hour)
 
           var count = DailystatsTypeHour.find({type:type,hour_of_day:hour}).fetch()
                       .map(function(stat) {return stat.count})
