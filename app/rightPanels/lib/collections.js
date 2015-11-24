@@ -1,7 +1,7 @@
 if (Meteor.isClient) {
-	RightPanelCastle = new Mongo.Collection('right_panel_castle')
-	RightPanelVillages = new Mongo.Collection('right_panel_villages')
-	RightPanelArmies = new Mongo.Collection('right_panel_armies')
-	RightPanelTreeUsers = new Mongo.Collection('rightPanelTreeUsers')
-	RightPanelUser = new Mongo.Collection('rightPanelUser')
+	RightPanelGeoInfo = new Mongo.Collection('right_panel_geo_info')
+	RightPanelPopInfo = new Mongo.Collection('right_panel_pop_info')
+	RightPanelIncientsInfo = new Mongo.Collection('right_panel_incidents_info')
+
+	RightPanelRoads = new Mongo.Collection('right_panel_roads')
 }

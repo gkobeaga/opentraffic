@@ -98,16 +98,6 @@ Template.menu.events({
 		}
 	},
 
-	'click #showForumsButton': function(event, template) {
-		if (Session.get('showForumsPanel')) {
-			Session.set('showForumsPanel', false)
-			Cookie.set('forum_close', new Date(), {years: 10})
-		} else {
-			Session.set('showForumsPanel', true)
-			Cookie.clear('forum_close')
-		}
-	},
-
 	'click #show_alerts_panel_button': function(event, template) {
 		if (Session.get('show_alerts_panel')) {
 			Session.set('show_alerts_panel', false)
@@ -130,70 +120,23 @@ Template.menu.events({
 		} else {
 			Session.set('show_stats_panel', true)
 		}
-	},
-
-	'click #show_rankings_panel_button': function(event, template) {
-		if (Session.get('show_rankings_panel')) {
-			Session.set('show_rankings_panel', false)
-		} else {
-			Session.set('show_rankings_panel', true)
-		}
-	},
-
-
-	'click #show_tree_panel_button': function(event, template) {
-		if (Session.get('show_tree_panel')) {
-			Session.set('show_tree_panel', false)
-		} else {
-			Session.set('show_tree_panel', true)
-		}
-	},
-
-
-	'click #calcPanelButton': function(event, template) {
-		if (Session.get('showCalcPanel')) {
-			Session.set('showCalcPanel', false);
-		} else {
-			Session.set('showCalcPanel', true);
-		}
-	},
-
-	'click #markersPanelButton': function(event, template) {
-		if (Session.get('showMarkersPanel')) {
-			Session.set('showMarkersPanel', false);
-		} else {
-			Session.set('showMarkersPanel', true);
-		}
 	}
+
 })
 
 
 
 Template.menu.rendered = function() {
-	Session.setDefault('show_summary_panel', false)
 	Session.setDefault('show_help_panel', false)
 	Session.setDefault('show_alerts_panel', false)
-	Session.setDefault('show_admin_panel', false)
 	Session.setDefault('show_settings_panel', false)
-	Session.setDefault('showForumsPanel', false)
-	Session.setDefault('show_chatrooms_panel', false)
-	Session.setDefault('show_rankings_panel', false)
 	Session.setDefault('show_stats_panel', false)
-	Session.setDefault('show_tree_panel', false)
-	Session.setDefault('showCalcPanel', false);
-	Session.setDefault('show_coords', false)
 
+/*
 	this.autorun(function() {
 		Meteor.subscribe('unreadAlerts')
-		Meteor.subscribe('room_list')
-		Meteor.subscribe('market')
 
-		// villages must always be loaded
-		// so that we know how many villages a player has
-		Meteor.subscribe('left_panel_villages')
-		Meteor.subscribe('left_panel_castle')
 	})
-/*
 	this.autorun(function() {
 		var roomsImIn = Roomlist.find().fetch();
 		var ids = _.pluck(roomsImIn, '_id');
@@ -203,25 +146,4 @@ Template.menu.rendered = function() {
 	})
 
 */
-	Session.setDefault('rightPanelInfoLoaded', false);
-	this.autorun(function() {
-		var selected = Session.get('selected');
-
-		if (selected && selected.id && selected.type) {
-			switch (selected.type) {
-				case 'castle':
-					var infoHandle = Meteor.subscribe('castleForHexInfo', selected.id);
-					Session.set('rightPanelInfoLoaded', infoHandle.ready());
-					break;
-				case 'army':
-					var infoHandle = Meteor.subscribe('armyForHexInfo', selected.id);
-					Session.set('rightPanelInfoLoaded', infoHandle.ready());
-					break;
-				case 'village':
-					var infoHandle = Meteor.subscribe('villageForHexInfo', selected.id);
-					Session.set('rightPanelInfoLoaded', infoHandle.ready());
-					break;
-			}
-		}
-	})
 }

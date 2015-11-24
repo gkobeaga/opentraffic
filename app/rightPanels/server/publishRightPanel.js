@@ -53,17 +53,46 @@ Meteor.publish('rightPanelUser', function(user_id) {
 	}
 })
 
-Meteor.publish('castleForHexInfo', function(id) {
-	if(this.userId) {
+Meteor.publish('provinceGeoInfo', function(province) {
 		var sub = this
-		var cur = Castles.find(id, {fields:castle_fields})
-		Mongo.Collection._publishCursor(cur, sub, 'right_panel_castle')
+		var cur = GeoInfo.find({province:province})
+		Mongo.Collection._publishCursor(cur, sub, 'right_panel_geo_info')
 		return sub.ready()
-	} else {
-		this.ready()
-	}
 })
 
+Meteor.publish('provincePopInfo', function(province) {
+		var sub = this
+		var cur = Population.find({province:province})
+		Mongo.Collection._publishCursor(cur, sub, 'right_panel_pop_info')
+		return sub.ready()
+})
+
+Meteor.publish('provinceIncidentsInfo', function(province) {
+		var sub = this
+
+    var stats = IncidentsDailystats.find({province:province})
+
+    var accident_count = 0,
+        road_safety_count = 0,
+        roadworks_count = 0
+
+    stats.forEach(function(stat) {
+      if (stat.type == 'accident' ) 
+        accident_count += stat.count
+      else if (stat.type == 'road_safety' ) 
+        road_safety_count += stat.count
+      else if (stat.type == 'roadwork' ) 
+        roadworks_count += stat.count
+    })
+
+      sub.added('right_panel_incidents_info', Random.id(), 
+                { accidents : accident_count,
+                  road_safety   : road_safety_count,
+                  roadworks : roadworks_count
+      })
+
+		return sub.ready()
+})
 
 Meteor.publish('armyForHexInfo', function(id) {
 	if(this.userId) {

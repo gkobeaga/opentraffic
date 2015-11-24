@@ -1,39 +1,72 @@
 <template name="rp_info_province">
 
 
-		{{#if provinceInfoLoaded}}
+  {{#if provinceInfoLoaded}}
 			<div class="panel panel-default" style="margin-top:0;">
 
 					<div class="panel-body">
+
+            <div style="float:right;">
+              <button class="btn btn-primary btn-xs" id="closeRpButton">
+                <i class="fa fa-close"></i>
+              </button>
+            </div>
+
 						<div class="rpNameContainer">
 							<div class="rpNameType">Province</div>
-							<div class="rpName">{{province}}</div>
+
+              <div class="rpName">{{geo.province}}</div>
               <!--<div class="rpEditName">{{> edit_name_button}}</div>-->
+
 							<div style="clear:both;"></div>
 						</div>
-					</div>
+
+          <br>
 
 					<table class="table table-condensed table-striped">
 						<tbody>
 							<tr>
-								<td>Vassals</td>
-								<td style="text-align:right;">{{round user.num_allies_below}}</td>
+								<td>Area</td>
+								<td style="text-align:right;">{{geo.area}} km^2</td>
 							</tr>
 							<tr>
-								<td>Networth</td>
-								<td style="text-align:right;">{{round user.net.total}}</td>
+								<td>Population</td>
+								<td style="text-align:right;">{{populationInfo population}}</td>
 							</tr>
 							<tr>
-								<td>Income</td>
-								<td style="text-align:right;">{{round user.income}}</td>
+								<td>Density</td>
+								<td style="text-align:right;">{{densityInfo population}} /km^2 </td>
+							</tr>
+						</tbody>
+					</table>
+
+          <br>
+
+
+					<div class="rpDivContainer">
+							<div class="rpDivName">Daily Stats</div>
+							<div style="clear:both;"></div>
+          </div>
+
+					<table class="table table-condensed table-striped">
+						<tbody>
+							<tr>
+								<td>Accidents</td>
+								<td style="text-align:right;">{{incidents.accidents}}</td>
 							</tr>
 							<tr>
-								<td>Lost Soldiers</td>
-								<td style="text-align:right;">{{round user.losses_num}}</td>
+								<td>Road Safety</td>
+								<td style="text-align:right;">{{incidents.road_safety}}</td>
+							</tr>
+							<tr>
+								<td>Road Works</td>
+								<td style="text-align:right;">{{incidents.roadworks}}</td>
 							</tr>
 						</tbody>
 					</table>
       </div>
+
+					</div>
 
 		{{else}}
 			<div class="pad_group" style="text-align:center;">
