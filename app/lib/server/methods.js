@@ -88,7 +88,7 @@ Meteor.methods({
       
 
         if (!Number.isNaN(incident.nivel) && incident.nivel !='')
-          incidentDoc.level = incident.nivel[0];
+          var level = incident.nivel[0];
 
         if (!Number.isNaN(incident.carretera) && incident.carretera !='')
           incidentDoc.road = incident.carretera[0];
@@ -146,16 +146,15 @@ Meteor.methods({
 
         IncidentsRealTime.update(
           incidentDoc, 
-          { $set: {updated_at : new Date()},
+          { $set: {updated_at : new Date(),level:level},
             $setOnInsert: { created_at: new Date(), date: date}
           },
           { upsert:true }
         );
 
-
         IncidentsWeek.update(
           incidentDoc, 
-          { $set: {updated_at : new Date()},
+          { $set: {updated_at : new Date(),level:level},
             $setOnInsert: { created_at: new Date(), date: date}
           },
           { upsert:true }
@@ -179,7 +178,7 @@ Meteor.methods({
 
       //IncidentsWeek.remove( weekRemoveQuery );
 
-      console.log('Real Time Incidents updated ('+ data.length +' incidents).');
+      console.log('Real Time Incidents 1 updated ('+ data.length +' incidents).');
 
     })
   },
@@ -226,7 +225,7 @@ Meteor.methods({
          *province
          ***********/ 
 
-        incidentDoc.province = 'Nafarroa';
+        incidentDoc.province = 'Nafarroa Garaia';
 
         /**********
          * Description
@@ -247,7 +246,7 @@ Meteor.methods({
          ***********/ 
 
         if (!Number.isNaN(incident.fecha) && incident.fecha !='' )
-          var date = new Date(incident.fecha);
+          var date = new Date(moment(incident.fecha, "DD-MM-YYYY hh:mm:ss").format())
         else 
           var date = NaN;
 
@@ -256,7 +255,7 @@ Meteor.methods({
          ***********/ 
       
         if (!Number.isNaN(incident.nivel) && incident.nivel !='')
-          incidentDoc.level = incident.nivel_afeccion;
+          var level = incident.nivel_afeccion;
 
         /**********
          * Road
@@ -288,10 +287,9 @@ Meteor.methods({
         else 
           incidentDoc.latitude = NaN;
 
-
         IncidentsRealTime.update(
           incidentDoc, 
-          { $set: {updated_at : new Date()},
+          { $set: {updated_at : new Date(),level:level},
             $setOnInsert: { created_at: new Date(), date: date}
           },
           { upsert:true }
@@ -300,7 +298,7 @@ Meteor.methods({
 
         IncidentsWeek.update(
           incidentDoc, 
-          { $set: {updated_at : new Date()},
+          { $set: {updated_at : new Date(),level:level},
             $setOnInsert: { created_at: new Date(), date: date}
           },
           { upsert:true }
@@ -324,57 +322,11 @@ Meteor.methods({
 
       //IncidentsWeek.remove( weekRemoveQuery );
 
-      console.log('Real Time Incidents updated ('+ res.length +' incidents).');
+      console.log('Real Time Incidents 2 updated ('+ res.length +' incidents).');
 
     })
   },
 
-  
-  updateDailyStats: function() {
-
-    var now = new Date();
-      
-      var dailystats = IncidentsWeek.aggregate([
-            { 
-            $match: {
-              /*
-               $and : [
-                 {date: {$lte: now }}, 
-                 { date: {$gte: new Date(now - 1000*60*60*24)}}
-               ]
-            }
-            */
-              date: {$lte: now , $gte: new Date(now - 1000*60*60*24)}}
-            },
-            //{$project : {hour_of_day: {$hour : '$date'}}},
-          {$group: {
-              _id: {
-                type : "$type",
-                province: "$province",
-                hour_of_day: {$hour : '$date'}
-              },
-              count: {$sum: 1}}
-          },
-          {$project : {
-            _id: 0,
-            type: "$_id.type",
-            province: "$_id.province",
-            hour_of_day: "$_id.hour_of_day",
-            count: "$count"}
-          }
-          ]);
-
-          IncidentsDailystats.remove({});
-			    dailystats.forEach(function(stat) {
-            IncidentsDailystats.insert(stat);
-          });
-          console.log('Daily incidents stats updated.');
-  },
-
- updateWeeklyStats: function() {
-
-                //return count;
-  },
 
   getIncidentsHistorical: function() {
     this.unblock();
@@ -420,6 +372,8 @@ Meteor.methods({
           incidentDoc.type = 'winter_road';
         else if (incident.tipo[0] == 'Meteorológica')
           incidentDoc.type = 'weather';
+        else if (incident.tipo[0] == 'Retención')
+          incidentDoc.type = 'jam';
         else if (incident.tipo[0] == 'Otras incidencias')
           incidentDoc.type = 'other_incidents';
         else {
@@ -455,7 +409,7 @@ Meteor.methods({
       
 
         if (!Number.isNaN(incident.nivel) && incident.nivel !='')
-          incidentDoc.level = incident.nivel[0];
+          var level = incident.nivel[0];
 
         if (!Number.isNaN(incident.carretera) && incident.carretera !='')
           incidentDoc.road = incident.carretera[0];
@@ -513,7 +467,7 @@ Meteor.methods({
 
         IncidentsHistorical.update(
           incidentDoc, 
-          { $set: {updated_at : new Date()},
+          { $set: {updated_at : new Date(),level:level},
             $setOnInsert: { created_at: new Date()}
           },
           { upsert:true }
@@ -524,6 +478,149 @@ Meteor.methods({
       console.log('Historical Incidents updated ('+ data.length +' incidents).');
 
     })
+  },
+
+  updateDailyStats: function() {
+
+    var now = new Date();
+      
+      var dailystats = IncidentsHistorical.aggregate([
+            { 
+            $match: {
+              date: {$lte: now , $gte: new Date(now - 1000*60*60*24*365)}}
+            },
+          {$group: {
+              _id: {
+                type : "$type",
+                province: "$province",
+                day: {$dayOfMonth: '$date'},
+                month: {$month: '$date'},
+                year: {$year: '$date'}
+              },
+              count: {$sum: 1}
+            }
+          },
+          {$project : {
+            _id: 0,
+            type: "$_id.type",
+            province: "$_id.province",
+            day: "$_id.day",
+            month: "$_id.month",
+            year: "$_id.year" ,
+            count: "$count"}
+          }
+          ]);
+
+			    dailystats.forEach(function(stat) {
+            var date = stat.year + '-' + stat.month + '-' + stat.day
+            stat.date = new Date(date).valueOf()
+
+            IncidentsDailystats.update(
+              { type: stat.type,
+                province: stat.province,
+                date: stat.date
+              }, 
+              { $set: {count : stat.count || 0} },
+              { upsert:true }
+            );
+          });
+          console.log('Daily incidents stats updated.');
+  },
+  
+  updateHourlyStats: function() {
+
+    var now = new Date();
+      
+      var hourlystats = IncidentsWeek.aggregate([
+            { 
+            $match: {
+              /*
+               $and : [
+                 {date: {$lte: now }}, 
+                 { date: {$gte: new Date(now - 1000*60*60*24)}}
+               ]
+            }
+            */
+              date: {$lte: now , $gte: new Date(now - 1000*60*60*24)}}
+            },
+            //{$project : {hour_of_day: {$hour : '$date'}}},
+          {$group: {
+              _id: {
+                type : "$type",
+                province: "$province",
+                hour_of_day: {$hour : '$date'}
+              },
+              count: {$sum: 1}}
+          },
+          {$project : {
+            _id: 0,
+            type: "$_id.type",
+            province: "$_id.province",
+            hour_of_day: "$_id.hour_of_day",
+            count: "$count"}
+          }
+          ]);
+
+			    hourlystats.forEach(function(stat) {
+            var date = stat.year + '-' + stat.month + '-' + stat.day + '08:00:00'
+            stat.date = new Date(date).valueOf()
+
+            IncidentsHourlystats.update(
+              { type: stat.type,
+                province: stat.province,
+                hour_of_day: stat.hour_of_day
+              }, 
+              { $set: {count : stat.count || 0} },
+              { upsert:true }
+            );
+          });
+
+          console.log('Hourly incidents stats updated.');
+  },
+
+ updateMonthlyStats: function() {
+    var now = new Date();
+      
+      var dailystats = IncidentsHistorical.aggregate([
+            { 
+            $match: {
+              date: {$lte: now , $gte: new Date(now - 1000*60*60*24*365)}}
+            },
+          {$group: {
+              _id: {
+                type : "$type",
+                province: "$province",
+                month: {$month: '$date'},
+                year: {$year: '$date'}
+              },
+              count: {$sum: 1}
+            }
+          },
+          {$project : {
+            _id: 0,
+            type: "$_id.type",
+            province: "$_id.province",
+            month: "$_id.month",
+            year: "$_id.year" ,
+            count: "$count"}
+          }
+          ]);
+
+			    dailystats.forEach(function(stat) {
+            var date = stat.year + '-' + stat.month + '-' + '01 08:00:00'
+            stat.date = new Date(date).valueOf()
+
+            IncidentsDailystats.update(
+              { type: stat.type,
+                province: stat.province,
+                date: stat.date
+              }, 
+              { $set: {count : stat.count || 0} },
+              { upsert:true }
+            );
+          });
+          console.log('Monthly incidents stats updated.');
+
   }
 
 
