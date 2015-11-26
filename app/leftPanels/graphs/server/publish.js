@@ -2,7 +2,7 @@ Meteor.publish('dailystats_type_hour', function() {
 	//if(this.userId) {
       var self = this
       
-      var stats = IncidentsDailystats.aggregate([
+      var stats = IncidentsHourlystats.aggregate([
           {$group: {
               _id: {
                 type : "$type",
@@ -32,7 +32,7 @@ Meteor.publish('dailystats_province_hour', function() {
 	//if(this.userId) {
       var self = this
       
-      var stats = IncidentsDailystats.aggregate([
+      var stats = IncidentsHourlystats.aggregate([
           {$group: {
               _id: {
                 type : "$type",
