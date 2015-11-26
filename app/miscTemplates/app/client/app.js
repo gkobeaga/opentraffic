@@ -1,35 +1,4 @@
 Template.app.helpers({
-	rp_template: function() {
-		var template = Session.get('rp_template')
-		if (template) {
-			return template
-		} else {
-			return 'empty_template'
-		}
-	},
-
-	rp_template_data: function() {
-		var selected = Session.get('selected');
-		if (selected) {
-			switch (selected.type) {
-				case 'castle':
-					return RightPanelCastle.findOne(selected.id);
-					break;
-				case 'village':
-					return RightPanelVillages.findOne(selected.id);
-					break;
-				case 'army':
-					return RightPanelArmies.findOne(selected.id);
-					break;
-				case 'hex':
-					return Hexes.findOne(selected.id);
-					break;
-				}
-		}
-
-		return {};
-	},
-
 	show_summary_panel: function() { return Session.get('show_summary_panel'); },
 	show_admin_panel: function() { return Session.get('show_admin_panel'); },
 	show_market_panel: function() { return Session.get('show_market_panel'); },
@@ -48,37 +17,15 @@ Template.app.helpers({
 });
 
 
+
 Template.app.created = function() {
 	var self = this;
-
-  /*
-	self.autorun(function() {
-		if (landingConnection.status().connected) {
-			// user profile and prefs
-			var appInfo = Session.get('appInfo');
-			if (appInfo) {
-				var user = Meteor.users.findOne(Meteor.userId(), {fields:{emails:1}});
-				if (user) {
-					landingConnection.subscribe('profile', user.emails[0].address, appInfo.appId, appInfo.appNumber);
-					landingConnection.subscribe('prefs', user.emails[0].address);
-				}
-			}
-
-			// for unread forum posts
-			landingConnection.subscribe('forumLatestPostDate');
-		}
-	});
-  */
-
 
 	// subscribe to what's onscreen
 	// uses meteor package meteorhacks:subs-manager
 	var subman = new SubsManager({cacheLimit:10, expireIn:9999})
 
 }
-
-
-
 
 Template.app.rendered = function() {
 
@@ -90,6 +37,7 @@ Template.app.rendered = function() {
 			$('#left_panels').css('height', canvasSize.height - 40)
 			$('#right_panels').css('height', canvasSize.height - 40)
 			$('#map_body').css('height', canvasSize.height - 40)
+			//$('#rp_content').css('height', canvasSize.height - 120)
 			//$('#map_body').css('width', canvasSize.width)
 		}
 	})
