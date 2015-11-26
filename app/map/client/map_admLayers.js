@@ -70,12 +70,10 @@ map.addLayer(    new ol.layer.Tile({
 
       var feature = event.target.getFeatures().item(0) ;
       var name = feature.get('name');
-
-      Session.set('map_selected',{type:'province',name:name})
-    	//Session.set('rp_template', 'rp_edit_name')
+      
+      Session.set('selected', {type:'province', name:name});
     	Session.set('rp_template', 'rp_info_province')
 
-      console.log(Session.get('map_selected'))
     });
 
     var selectedFeatures = select.getFeatures();
