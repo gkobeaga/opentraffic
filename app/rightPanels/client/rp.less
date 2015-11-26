@@ -16,13 +16,30 @@
 }
 
 .rp_content {
-	padding: @panel_padding;
+	//padding: @panel_padding;
+	//background-color: @panel_bg;
 	min-width: 175px;
 	max-width: 250px;
+	margin-top: 0px;
+	margin-bottom: 0px;
+	padding-top:0px;
+	padding-bottom:0px;
 }
 
 #rp_info_hex {
 	max-width:200px;
+}
+
+.graph_content {
+	overflow-y: auto;
+	overflow-x: hidden;
+	//background-color: @panel_bg;
+	//padding: @panel_padding;
+	height: 100%;
+	pointer-events: auto;
+	margin-left: 10px;
+	margin-right: 10px;
+	width: 100%;
 }
 
 #rp_changeSpecialization {
@@ -55,4 +72,23 @@
 		padding-right:8px;
 	}
 
+}
+
+.stats_chart {
+	height: 300px;
+	width: 100%;
+  text {
+		fill: @text-color;
+    font-size: 10px;
+	}
+	& .nvtooltip {
+		background-color: rgba(20,20,20,0.6);
+		color: @text-color;
+	}
+	& .nvd3 .nv-axis line {
+		stroke: #666 !important;
+	}
+	& .nvd3 .nv-axis path {
+		stroke: #666;
+	}
 }

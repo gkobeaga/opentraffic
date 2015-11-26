@@ -70,7 +70,7 @@ Meteor.publish('provincePopInfo', function(province) {
 Meteor.publish('provinceIncidentsInfo', function(province) {
 		var sub = this
 
-    var stats = IncidentsDailystats.find({province:province})
+    var stats = IncidentsHourlystats.find({province:province})
 
     var accident_count = 0,
         road_safety_count = 0,
@@ -92,6 +92,23 @@ Meteor.publish('provinceIncidentsInfo', function(province) {
       })
 
 		return sub.ready()
+})
+
+
+Meteor.publish('provinceDailystatsGraph', function(province) {
+
+    var now = new Date();
+		var sub = this
+    var types =  [ 'accident', 'road_safety', 'roadwork'];
+		var cur = IncidentsDailystats.find({
+      date: {$gte: moment(new Date(now - 1000*60*60*24*40)).valueOf()},
+      type: {$in: types},
+      count: {$lt: 50},
+      province:province
+    })
+		Mongo.Collection._publishCursor(cur, sub, 'right_panel_graph_data')
+		return sub.ready()
+
 })
 
 Meteor.publish('armyForHexInfo', function(id) {
