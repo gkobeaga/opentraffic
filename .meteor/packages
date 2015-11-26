@@ -38,15 +38,10 @@ pfafman:nvd3
 #datariot:ganalytics
 danimal:cue
 http
-#meteorhacks:kadira
+meteorhacks:kadira
 #danimal:svgexport
 #ongoworks:spiderable
 #meteorhacks:sikka
-#dominus-minimap
-#dominus-battles
-#dominus-mapbaker
-#dominus-tree
-#dominus-markers
 peerlibrary:xml2js
 mrt:iconv-lite
 webapp
