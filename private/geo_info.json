@@ -4,4 +4,5 @@
 { "_id" : "48" , "province" : "Bizkaia", "area" : 2219 },
 { "_id" : "641" , "province" : "Lapurdi", "area" : 858 },
 { "_id" : "642" , "province" : "Nafarroa Beherea", "area" : 1325 },
-{ "_id" : "643" , "province" : "Zuberoa", "area" : 814 }]
+{ "_id" : "643" , "province" : "Zuberoa", "area" : 814 },
+{ "_id" : "EH" , "state" : "Basque Country", "area" : 20828 }]
