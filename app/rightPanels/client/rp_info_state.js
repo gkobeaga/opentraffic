@@ -1,12 +1,12 @@
 var subs = new ReadyManager()
 
-Template.rp_info_province.helpers({
+Template.rp_info_state.helpers({
 
-	provinceInfoLoaded: function() {
+	stateInfoLoaded: function() {
 		return Session.get('rightPanelInfoLoaded');
 	},
 
-	provinceGraphsLoaded: function() {
+	stateGraphsLoaded: function() {
 		return Session.get('rightPanelGraphsLoaded');
 	},
 
@@ -30,33 +30,30 @@ Template.rp_info_province.helpers({
 
 })
 
-Template.rp_info_province.created = function() {
+Template.rp_info_state.created = function() {
 	var self = this;
+
+	//Session.set('update_highlight', Random.fraction());
 
 	self.autorun(function() {
 
 		var selected = Session.get('selected');
+    console.log(selected)
+			//self.subs.subscriptions([{
 			subs.subscriptions([
 
-        {groupName: 'provinceInfo',
-          subscriptions: [ Meteor.subscribe('provinceGeoInfo', selected.name),
-            Meteor.subscribe('provincePopInfo', selected.name),
-            Meteor.subscribe('provinceIncidentsInfo', selected.name)]},
+        {groupName: 'stateInfo',
+          subscriptions: [ Meteor.subscribe('stateGeoInfo', selected.name),
+            Meteor.subscribe('statePopInfo', selected.name),
+            Meteor.subscribe('stateIncidentsInfo', selected.name)]},
 
-        { groupName: 'provinceGraphs',
-				subscriptions: [ Meteor.subscribe('provinceDailystatsGraph', selected.name)]}
+        { groupName: 'stateGraphs',
+				subscriptions: [ Meteor.subscribe('stateDailystatsGraph', selected.name)]}
       ]);
 	});
 }
 
-Template.rp_info_province.events({
-    'click #closeRpButton': function(event, template) {
-        deselect_all();
-        //remove_all_highlights();
-    }
-});
-
-Template.rp_info_province.rendered = function() {
+Template.rp_info_state.rendered = function() {
 	Session.setDefault('rightPanelInfoLoaded', false);
 	Session.setDefault('rightPanelGraphsLoaded', false);
 
@@ -65,14 +62,11 @@ Template.rp_info_province.rendered = function() {
 
 		if (selected && selected.name && selected.type) {
 			switch (selected.type) {
-				case 'province':
-					Session.set('rightPanelInfoLoaded', subs.ready('provinceInfo'));
-					Session.set('rightPanelGraphsLoaded', subs.ready('provinceInfo'));
+				case 'state':
+					Session.set('rightPanelInfoLoaded', subs.ready('stateInfo'));
+					Session.set('rightPanelGraphsLoaded', subs.ready('stateInfo'));
 					console.log(Session.get('rightPanelGraphsLoaded'))
 
-					break;
-				case 'road':
-					Session.set('rightPanelInfoLoaded', subs.ready('provinceInfo'));
 					break;
 			}
 		}
@@ -80,7 +74,7 @@ Template.rp_info_province.rendered = function() {
 
 
 	this.autorun(function() {
-		if (subs.ready('provinceGraphs')) {
+		if (subs.ready('stateGraphs')) {
 
 		  var selected = Session.get('selected');
 		  if (selected && selected.name && selected.type) {
@@ -103,7 +97,7 @@ Template.rp_info_province.rendered = function() {
 
 			_.each(types, function(type) {
 			  _.each(days, function(day) {
-          var count = RightPanelGraphData.find({province:selected.name,type:type,date:day}).fetch()
+          var count = RightPanelGraphData.find({type:type,date:day}).fetch()
                         .map(function(stat) {
                           return stat.count
                         })
@@ -154,3 +148,4 @@ Template.rp_info_province.rendered = function() {
 		}
 	})
 }
+

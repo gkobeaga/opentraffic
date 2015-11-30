@@ -1,23 +1,15 @@
-<template name="rp_info_province">
+<template name="rp_info_state">
 
 
-  {{#if provinceInfoLoaded}}
+  {{#if stateInfoLoaded}}
 			<div class="panel panel-default" style="margin-top:0; height:100%;">
 
 					<div class="panel-body">
 
-            <div style="float:right;">
-              <button class="btn btn-primary btn-xs" id="closeRpButton">
-                <i class="fa fa-close"></i>
-              </button>
-            </div>
+            <br>
 
 						<div class="rpNameContainer">
-							<div class="rpNameType">Province</div>
-
-              <div class="rpName">{{geo.province}}</div>
-              <!--<div class="rpEditName">{{> edit_name_button}}</div>-->
-
+              <div class="rpName">{{geo.state}}</div>
 							<div style="clear:both;"></div>
 						</div>
 
@@ -85,19 +77,4 @@
 			</div>
 		{{/if}}
 
-
-    <!--
-		{{#if battleInfoReady}}
-			{{#if battle}}
-				<div class="panel panel-default">
-					<div class="panel-heading">
-						Battle
-					</div>
-					<div class="panel-body">
-						{{> battleReport battle}}
-					</div>
-				</div>
-			{{/if}}
-		{{/if}}
-    -->
 </template>

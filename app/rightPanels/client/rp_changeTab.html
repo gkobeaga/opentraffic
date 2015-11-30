@@ -1,0 +1,18 @@
+<template name="rp_changeTab">
+
+        <div class="pad_group">
+            <div class="btn-group btn-group-justified" style="float:botton;" role="group">
+
+                <div class="btn-group" role="group">
+                  
+                  {{#if rpSummaryTabActive}}
+                    <button type="button" class="btn btn-default btn-primary"
+                        id="rpSettingsTabButton">Settings</button>
+                  {{else}}
+                    <button type="button" class="btn btn-default btn-primary"
+                        id="rpSummaryTabButton">Back</button>
+                  {{/if}}
+                </div>
+            </div>
+        </div>
+</template>

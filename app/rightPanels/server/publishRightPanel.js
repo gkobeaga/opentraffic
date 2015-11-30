@@ -62,7 +62,7 @@ Meteor.publish('provinceGeoInfo', function(province) {
 
 Meteor.publish('provincePopInfo', function(province) {
 		var sub = this
-		var cur = Population.find({province:province})
+		var cur = Population.find({province:province},{fields: {percentages:0}})
 		Mongo.Collection._publishCursor(cur, sub, 'right_panel_pop_info')
 		return sub.ready()
 })
@@ -70,7 +70,7 @@ Meteor.publish('provincePopInfo', function(province) {
 Meteor.publish('provinceIncidentsInfo', function(province) {
 		var sub = this
 
-    var stats = IncidentsHourlystats.find({province:province})
+    var stats = IncidentsHourlystats.find({province:province}, {fields: {type:1,count:1}})
 
     var accident_count = 0,
         road_safety_count = 0,
@@ -111,43 +111,64 @@ Meteor.publish('provinceDailystatsGraph', function(province) {
 
 })
 
-Meteor.publish('armyForHexInfo', function(id) {
-	if(this.userId) {
+
+
+
+
+Meteor.publish('stateGeoInfo', function(state) {
 		var sub = this
-		var cur = Armies.find(id, {fields:army_fields})
-		Mongo.Collection._publishCursor(cur, sub, 'right_panel_armies')
+		var cur = GeoInfo.find({state:state})
+		Mongo.Collection._publishCursor(cur, sub, 'right_panel_geo_info')
 		return sub.ready()
-	} else {
-		this.ready()
-	}
 })
 
-Meteor.publish('villageForHexInfo', function(id) {
-	if(this.userId) {
+Meteor.publish('statePopInfo', function(state) {
 		var sub = this
-		var cur = Villages.find(id, {fields:village_fields})
-		Mongo.Collection._publishCursor(cur, sub, 'right_panel_villages')
+		var cur = Population.find({state:state})
+		Mongo.Collection._publishCursor(cur, sub, 'right_panel_pop_info')
 		return sub.ready()
-	} else {
-		this.ready()
-	}
+})
+
+Meteor.publish('stateIncidentsInfo', function(state) {
+		var sub = this
+
+    var stats = IncidentsHourlystats.find()
+
+    var accident_count = 0,
+        road_safety_count = 0,
+        roadworks_count = 0
+
+    stats.forEach(function(stat) {
+      if (stat.type == 'accident' ) 
+        accident_count += stat.count
+      else if (stat.type == 'road_safety' ) 
+        road_safety_count += stat.count
+      else if (stat.type == 'roadwork' ) 
+        roadworks_count += stat.count
+    })
+
+      sub.added('right_panel_incidents_info', Random.id(), 
+                { accidents : accident_count,
+                  road_safety   : road_safety_count,
+                  roadworks : roadworks_count
+      })
+
+		return sub.ready()
 })
 
 
-Meteor.publish('rightPanelTree', function(user_id) {
-	if(this.userId && user_id != this.userId) {
+Meteor.publish('stateDailystatsGraph', function(state) {
+
+    var now = new Date();
 		var sub = this
-
-		var user = Meteor.users.findOne(user_id, {fields: {allies_above:1}})
-		if (user) {
-			var fields = {name:1, x:1, y:1, castle_id:1, lord:1, username:1}
-
-			var cur = Meteor.users.find({_id: {$in:user.allies_above}}, {fields: fields})
-			Mongo.Collection._publishCursor(cur, sub, 'rightPanelTreeUsers')
-		}
-
+    var types =  [ 'accident', 'road_safety', 'roadwork'];
+		var cur = IncidentsDailystats.find({
+      date: {$gte: moment(new Date(now - 1000*60*60*24*40)).valueOf()},
+      type: {$in: types},
+      count: {$lt: 50}
+    })
+		Mongo.Collection._publishCursor(cur, sub, 'right_panel_graph_data')
 		return sub.ready()
-	} else {
-		this.ready()
-	}
+
 })
+

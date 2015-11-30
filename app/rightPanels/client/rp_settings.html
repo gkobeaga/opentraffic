@@ -1,0 +1,79 @@
+<template name="rp_settings">
+
+
+			<div class="panel panel-default" style="margin-top:0; height:100%;">
+
+
+					<div class="panel-body">
+
+					  <div class="rpDivContainer">
+							<div class="rpDivName">Map Options</div>
+							<div style="clear:both;"></div>
+            </div>
+
+            <br>
+
+					<table class="table table-condensed table-striped">
+						<tbody>
+							<tr>
+								<td>Tile</td>
+
+          <div class="dropdown">
+            <button class="btn btn-primary btn-mini dropdown-toggle" type="button" id="mt-command-dd"
+              data-toggle="dropdown" style="height:80%;">Tile
+             <span class="caret"></span>
+        </button>
+       <ul class="dropdown-menu" role="menu" aria-labelledby="tile-menu" aria-haspopup="true" aria-expanded="false">
+             <li role="presentation">
+                <a role="menuitem" tabindex="-1"
+                    id="tile-dropdown-roads" href="#">Roads</a>
+             </li>
+             <li role="presentation">
+                <a role="menuitem" tabindex="-1" href="#" id="tile-dropdown-satelite">Satelite</a>
+             </li>
+    </ul>
+</div>
+							</tr>
+							<tr>
+								<td>Grid</td>
+                {{> BootstrapToggle options=toggle_options var="grid-checkbox"}}
+							</tr>
+						</tbody>
+					</table>
+
+
+
+					  <div class="rpDivContainer">
+							<div class="rpDivName">Layer Selection </div>
+							<div style="clear:both;"></div>
+            </div>
+
+            <br>
+
+					<table class="table table-condensed table-striped">
+						<tbody>
+							<tr>
+								<td>Provinces Layer</td>
+                {{> BootstrapToggle options=toggle_options var="provinces-checkbox"}}
+							</tr>
+							<tr>
+								<td>Roads Layer</td>
+                {{> BootstrapToggle options=toggle_options var="roads-checkbox"}}
+							</tr>
+							<tr>
+								<td>Incidents Layer</td>
+                {{> BootstrapToggle options=toggle_options var="incidents-checkbox"}}
+							</tr>
+						</tbody>
+					</table>
+          
+
+
+      </div>
+
+
+      {{> rp_changeTab}}
+      </div>
+
+</template>
+
