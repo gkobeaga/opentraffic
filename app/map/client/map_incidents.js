@@ -12,45 +12,55 @@ Template.map_incidents.created = function() {
 				]
 		}])
 	})
+
+
+
+
 }
 
 Template.map_incidents.rendered = function() {
+
+  var self = this
+  console.log(this.parent)
+
+
+//self.map = map
+
+
 	this.autorun(function() {
-		if (subs.ready('realtime') && Session.get('map_created')) {
-  
+
+
+		if (subs.ready('realtime') && Session.get('map_created') ) {
+    
       var currentIncidentsMarkers = []
 
-  
       var currentIncidents = IncidentsRealTimeMap.find()
-      //var currentIncidents = {};
-      //
 
-  //console.log(currentIncidents.fetch());
-		currentIncidents.forEach(function(incident) {
+		  currentIncidents.forEach(function(incident) {
 
-    currentIncidentsMarkers.push( 
-              {_id:incident._id, 
-                feature:
-                  new ol.Feature({
-                  geometry: new ol.geom.Point(
-                  [Number(incident.longitude),Number(incident.latitude)]
-                  ).transform('EPSG:4326', 'EPSG:3857'),
-                  road: incident.road,
-                  sense: incident.sense,
-                  type: incident.type,
-                  level: incident.level
-              })
-              }
-    );
-  });
+        currentIncidentsMarkers.push( 
+                      { _id:incident._id, 
+                        feature:
+                          new ol.Feature({
+                            geometry: new ol.geom.Point(
+                              [Number(incident.longitude),Number(incident.latitude)]
+                            ).transform('EPSG:4326', 'EPSG:3857'),
+                            road: incident.road,
+                            sense: incident.sense,
+                            type: incident.type,
+                            level: incident.level
+                          })
+                      }
+        );
+      });
 
-  var styleCache = {};
+      var styleCache = {};
 
-  function styleFunction(feature, resolution) {
+      function styleFunction(feature, resolution) {
 
-      var type = feature.get('type');
+        var type = feature.get('type');
 
-      if (!styleCache[type]) {
+        if (!styleCache[type]) {
           styleCache[type] = new ol.style.Style({
             image: new ol.style.Icon(/** @type {olx.style.IconOptions} */ ({
             opacity: 0.8,
@@ -60,21 +70,34 @@ Template.map_incidents.rendered = function() {
         }
         return [styleCache[type]];
       
-  }
+      }
 
-  
-//	this.autorun(function() {
-var currentSource = new ol.source.Vector({
-  features: currentIncidentsMarkers.map(function(marker){ return marker.feature;})
-});
+      var currentSource = new ol.source.Vector({
+        features: currentIncidentsMarkers.map(function(marker){ return marker.feature;})
+      });
 
-var currentLayer = new ol.layer.Vector({
-  source: currentSource,
-  style: styleFunction
-});
+      if (!self.incidentsLayer) {
+        self.incidentsLayer = new ol.layer.Vector({
+          source: currentSource,
+          style: styleFunction
+        });
+      } else {
 
-map.addLayer(currentLayer)
+        var incidentsLayer = new ol.layer.Vector({
+          source: currentSource,
+          style: styleFunction
+        });
+
+        map.removeLayer(self.incidentsLayer)
+        self.incidentsLayer = incidentsLayer
+      }
+
+      map.addLayer(self.incidentsLayer)
     }
   })
 
+}
+
+Template.map_incidents.destroyed = function () {
+  map.removeLayer(this.incidentsLayer)
 }

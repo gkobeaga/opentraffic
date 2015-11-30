@@ -331,18 +331,15 @@ Meteor.methods({
   getIncidentsHistorical: function() {
     this.unblock();
 
-    console.log('Bai');
     var today = new Date();
 
     var url = 'http://www.trafikoa.net/servicios/IncidenciasTDT/IncidenciasTrafikoTDTHist?fechaIni=20150902&fechaFin=' + moment(today).format('YYYYMMDD');
     //var url = 'http://www.trafikoa.net/servicios/IncidenciasTDT/IncidenciasTrafikoTDTGeo';
     
-    console.log(url);
     var response = HTTP.call('GET', url, {
       encoding: null, // get content as binary data
       responseType: 'buffer' // get it as a buffer
     });
-    console.log('response');
 
     var result = iconv.decode(response.content,'iso-8859-1');
     return result;
@@ -533,15 +530,12 @@ Meteor.methods({
       
       var hourlystats = IncidentsWeek.aggregate([
             { 
-            $match: {
-              /*
-               $and : [
-                 {date: {$lte: now }}, 
-                 { date: {$gte: new Date(now - 1000*60*60*24)}}
-               ]
-            }
-            */
-              date: {$lte: now , $gte: new Date(now - 1000*60*60*24)}}
+              $match: {
+                date: 
+                  { $lte: now , 
+                    $gte: new Date(now - 1000*60*60*24)
+                 }
+              }
             },
             //{$project : {hour_of_day: {$hour : '$date'}}},
           {$group: {
@@ -584,7 +578,7 @@ Meteor.methods({
       var dailystats = IncidentsHistorical.aggregate([
             { 
             $match: {
-              date: {$lte: now , $gte: new Date(now - 1000*60*60*24*365)}}
+              date: {$gte: new Date(now - 1000*60*60*24*30)}}
             },
           {$group: {
               _id: {

@@ -25,9 +25,22 @@ incident_marker = function(lon, lat) {
 }
 
 deselect_all = function() {
-	Session.set('mouse_mode', 'default');
-	Session.set('selected', null);
-	Session.set('rp_template', null);
+	//Session.set('selected', null);
+	//Session.set('rp_template', null);
+  Session.set('selected', {type:'state', name:'Basque Country'});
+  Session.set('rp_template', 'rp_info_state')
+};
+
+set_summary_tab = function() {
+	var selected = Session.get('selected');
+
+  Session.set('rp_tab','summary')
+  Session.set('rp_template', 'rp_info_'+selected.type)
+};
+
+set_settings_tab = function() {
+  Session.set('rp_tab','settings')
+  Session.set('rp_template', 'rp_settings')
 };
 
 remove_all_highlights = function() {

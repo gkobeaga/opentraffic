@@ -14,6 +14,13 @@ Template.rp_settings.helpers({
 		return Session.get('rightPanelGraphsLoaded');
 	},
 
+  tileLAyer: function() {
+    if (Session.get('map_tile_source')=='osm') 
+      return 'OSM'
+    if (Session.get('map_tile_source')=='sat') 
+      return 'Satelite'
+  },
+
   toggle_options : function(){
                 return {
                     "size": "mini"
@@ -62,7 +69,13 @@ Template.rp_settings.created = function() {
 }
 
 Template.rp_settings.events({
-    'click #tile-dropdown-roads' : function(event, template) {
+    'click #tile-dropdown-osm' : function(event, template) {
+      Session.set('map_tile_source','osm')
+      console.log('tile-roads')
+    },
+
+    'click #tile-dropdown-sat' : function(event, template) {
+      Session.set('map_tile_source','sat')
       console.log('tile-roads')
     }
 });

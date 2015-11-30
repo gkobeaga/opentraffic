@@ -3,9 +3,6 @@ Meteor.startup(function() {
     Meteor.call('updateIncidentsRealTime1');
     Meteor.call('updateIncidentsRealTime2');
     Meteor.call('updateHourlyStats');
-    //Meteor.call('updateMonthlyStats');
-
-    Meteor.call('updateDailyStats');
 
 
     Meteor.setInterval(function(){

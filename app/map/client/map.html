@@ -3,10 +3,22 @@
 		{{> hover_box}}
 -->
     <div id="map" class="map"></div>
-    
-    {{> map_incidents}}
-    <!--{{> map_roads}}-->
-    {{> map_admLayers}}
+
+      {{#if gridLayerActice }}
+        {{> map_grid}}
+      {{/if}}
+
+      {{#if incidentsLayerActice }}
+        {{> map_incidents}}
+      {{/if}}
+
+      {{#if roadsLayerActice }}
+        {{> map_roads}}
+      {{/if}}
+      
+      {{#if provincesLayerActice }}
+        {{> map_provinces}}
+      {{/if}}
 
   <!--
 <div id="pop-up">
@@ -22,46 +34,3 @@
 </template>
 
 
-<!--
-<template name="map_settings">
-
-          <div class="panel panel-default">
-              <div class="panel-heading">
-                  <h4>Map Settings</h4>
-              </div>
-        <div class="panel-body">
-
-          {{#autoForm id="map-settings" schema=mapSettingsSchema}}
-
-        <fieldset>
-      <div class="col-md-6">
-  <h5>Regions</h5>
-  {{> afFieldInput name="regions" type="select-checkbox-inline" 
-  options=regionsOptions}}
-  <h5>Incidents Causes</h5>
-  {{> afFieldInput name="causes" type="select-checkbox-inline" 
-  options=causesOptions}}
-      </div>
-
-      <div class="col-md-6">
-  <h5>nx</h5>
-  {{> afFieldInput name="nx" type="range" min="10" value="50" max="100"}}
-  <h5>ny</h5>
-  {{> afFieldInput name="ny" type="range" min="10" value="50" max="200"}}
-      </div>
-
-      <div class="col-md-6">
-  <h5>Method</h5>
-  {{> afFieldInput name="method" type="select" options=methodsOptions}}
-  <h5>Parameters: h0</h5>
-  {{> afFieldInput name="h0" type="range" min="500" value="1000" max="2000"}}
-      </div>
-      </fieldset>
-  <button type="button" class="btn btn-primary btn-map-settings   
-  ">Submit</button>
-{{/autoForm}}
-
-</div>
-</div>
-</template>
--->
