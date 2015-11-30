@@ -22,6 +22,7 @@ reactive-var
 momentjs:moment
 meteor-platform
 nemo64:bootstrap
+williamledoux:bootstrap-toggle
 fortawesome:fontawesome
 danimal:readymanager
 #danimal:mapmover
