@@ -22,13 +22,6 @@ if (Meteor.isClient) {
   DailystatsProvinceHour = new Mongo.Collection('incidents_dailystats_province_hour');
 }
 
-if (Meteor.isServer) {
-	Dailystats.allow({insert: false, update: false, remove: false});
-	Meteor.users.allow({insert: false, update: false, remove: false});
-	Gamestats.allow({insert: false, update: false, remove: false});
-	Reports.allow({insert: false, update: false, remove: false});
-}
-
 Meteor.startup(function() {
   //Profiles = new Mongo.Collection('profiles', {connection:landingConnection});
   //Prefs = new Mongo.Collection('prefs', {connection:landingConnection});
