@@ -6,14 +6,16 @@ Template.map_density.created = function() {
 
 
     var provinces = []
-    if (Session.get("density-province-araba")) { provinces.push('Araba') }
-    if (Session.get("density-province-bizkaia") ) { provinces.push('Bizkaia') }
-    if (Session.get("density-province-gipuzkoa") ) { provinces.push('Gipuzkoa') }
+    var nprovinces = []
+    Session.get("density-province-araba") ?  provinces.push('Araba') : nprovinces.push('Araba')
+    Session.get("density-province-bizkaia") ?  provinces.push('Bizkaia') : nprovinces.push('Bizkaia')
+    Session.get("density-province-gipuzkoa") ?  provinces.push('Gipuzkoa') : nprovinces.push('Gipuzkoa')
       
     var types = []
-    if (Session.get("density-types-accidents") ) { types.push('accident') }
-    if (Session.get("density-types-roadSafety") ) { types.push('road_safety') }
-    if (Session.get("density-types-roadworks") ) { types.push('roadwork') }
+    var ntypes = []
+    Session.get("density-types-accidents") ? types.push('accident') : ntypes.push('accident') 
+    Session.get("density-types-roadSafety") ? types.push('road_safety') : ntypes.push('road_safety') 
+    Session.get("density-types-roadworks") ? types.push('roadwork') : ntypes.push('roadwork') 
     
     var nx = Session.get("density-param-ncells")
     var ny = Session.get("density-param-ncells")
@@ -23,16 +25,18 @@ Template.map_density.created = function() {
     
      var gridQuery = {
             "properties.provinces": {"$all" : provinces},
-            //"properties.types": types.length >1 ? {"$all" : types}: types[0],
-            "properties.types": {"$all" : types},
+            "properties.provinces": {"$nin" : provinces},
+            "properties.types": {"$in" : types},
+            "properties.types": {"$nin" : ntypes},
             "grd_params.nx": nx,
             "grd_params.ny": ny
      }
 
      var densityQuery = {
             "properties.provinces": {"$all" : provinces},
-            //"properties.types": types.length >1 ? {"$all" : types}: types[0],
-            "properties.types": {"$all" : types},
+            "properties.provinces": {"$nin" : provinces},
+            "properties.types": {"$in" : types},
+            "properties.types": {"$nin" : ntypes},
             "grd_params.nx": nx,
             "grd_params.ny": ny,
             "method" : method,
