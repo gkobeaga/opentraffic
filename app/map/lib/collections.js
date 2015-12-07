@@ -1,6 +1,8 @@
 Roads = new Mongo.Collection('map_roads')
 Provinces = new Mongo.Collection('map_provinces')
-Municipalities = new Mongo.Collection('map_municipalities')
+Grids = new Mongo.Collection('map_grids')
+Density = new Mongo.Collection('map_density')
+
 
 if (Meteor.isClient) {
     // client only collections 

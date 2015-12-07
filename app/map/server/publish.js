@@ -29,3 +29,15 @@ Meteor.publish('map_provinces', function() {
 		return Provinces.find();
 
 })
+
+Meteor.publish('map_grid', function(query) {
+
+		return Grids.find(query);
+
+})
+
+
+Meteor.publish('map_density', function(query) {
+		return Density.find(query);
+
+})

@@ -1,0 +1,141 @@
+<template name="rp_settings_density">
+
+					  <div class="rpDivContainer">
+							<div class="rpDivName">Density Layer Options</div>
+							<div style="clear:both;"></div>
+            </div>
+
+            <br>
+
+					  <div class="rpDivContainer">
+							<div>Provinces</div>
+							<div style="clear:both;"></div>
+            </div>
+
+					<table class="table table-condensed table-striped">
+						<tbody>
+							<tr>
+								<td>Araba</td>
+                {{> BootstrapToggle options=toggle_options var="density-province-araba"}}
+							</tr>
+							<tr>
+								<td>Bizkaia</td>
+                {{> BootstrapToggle options=toggle_options var="density-province-bizkaia"}}
+							</tr>
+							<tr>
+								<td>Gipuzkoa</td>
+                {{> BootstrapToggle options=toggle_options var="density-province-gipuzkoa"}}
+							</tr>
+						</tbody>
+					</table>
+
+					  <div class="rpDivContainer">
+							<div>Incident Types</div>
+							<div style="clear:both;"></div>
+            </div>
+
+					<table class="table table-condensed table-striped">
+						<tbody>
+							<tr>
+								<td>Accidents</td>
+                {{> BootstrapToggle options=toggle_options var="density-types-accidents"}}
+							</tr>
+							<tr>
+								<td>Road Safety</td>
+                {{> BootstrapToggle options=toggle_options var="density-types-roadSafety"}}
+							</tr>
+							<tr>
+								<td>Roadworks</td>
+                {{> BootstrapToggle options=toggle_options var="density-types-roadworks"}}
+							</tr>
+						</tbody>
+					</table>
+
+					  <div class="rpDivContainer">
+							<div>Parameters</div>
+							<div style="clear:both;"></div>
+            </div>
+
+					<table class="table table-condensed table-striped">
+						<tbody>
+							<tr>
+								<td>Grid</td>
+
+          <div class="dropdown">
+            <button class="btn btn-primary btn-mini dropdown-toggle" type="button" id="mt-command-dd"
+                                                                                   data-toggle="dropdown" style="height:80%;">{{ncells}}
+             <span class="caret"></span>
+        </button>
+       <ul class="dropdown-menu" role="menu" aria-labelledby="ncells-menu" aria-haspopup="true" aria-expanded="false">
+             <li role="presentation">
+                <a role="menuitem" tabindex="-1"
+                    id="ncells-100" href="#">100x100</a>
+             </li>
+             <li role="presentation">
+                <a role="menuitem" tabindex="-1" href="#" id="ncells-200">200x200</a>
+             </li>
+             <li role="presentation">
+                <a role="menuitem" tabindex="-1" href="#" id="ncells-400">400x400</a>
+             </li>
+    </ul>
+</div>
+							</tr>
+							<tr>
+								<td>h0</td>
+          <div class="dropdown">
+            <button class="btn btn-primary btn-mini dropdown-toggle" type="button" id="mt-command-dd"
+                                                                                   data-toggle="dropdown" style="height:80%;">{{h0}}
+             <span class="caret"></span>
+        </button>
+       <ul class="dropdown-menu" role="menu" aria-labelledby="h0-menu" aria-haspopup="true" aria-expanded="false">
+             <li role="presentation">
+                <a role="menuitem" tabindex="-1"
+                    id="h0-500" href="#">500</a>
+             </li>
+             <li role="presentation">
+                <a role="menuitem" tabindex="-1" href="#" id="h0-1000">1000</a>
+             </li>
+             <li role="presentation">
+                <a role="menuitem" tabindex="-1" href="#" id="h0-1500">1500</a>
+             </li>
+    </ul>
+</div>
+
+							</tr>
+							<tr>
+								<td>Smoothing method</td>
+
+          <div class="dropdown">
+            <button class="btn btn-primary btn-mini dropdown-toggle" type="button" id="mt-command-dd"
+                                                                                   data-toggle="dropdown" style="height:80%;">{{method}}
+             <span class="caret"></span>
+        </button>
+       <ul class="dropdown-menu" role="menu" aria-labelledby="method-menu" aria-haspopup="true" aria-expanded="false">
+             <li role="presentation">
+                <a role="menuitem" tabindex="-1"
+                    id="method-splancs" href="#">Splancs</a>
+             </li>
+    </ul>
+</div>
+							</tr>
+						</tbody>
+					</table>
+
+          <div class="btn-group btn-group-justified" style="float:botton;" role="group">
+
+                <div class="btn-group" role="group">
+                  
+                  {{#if ocpuActive}}
+                    
+				<i class="fa fa-refresh fa-spin"></i>
+				&nbsp;
+				OpenCPU working
+                  {{else}}
+                    <button type="button" class="btn btn-default btn-primary"
+                        id="ocpuCallButton">Calculate Density</button>
+                  {{/if}}
+                </div>
+          </div>
+
+
+</template>

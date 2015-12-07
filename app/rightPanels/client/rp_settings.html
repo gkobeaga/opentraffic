@@ -64,10 +64,20 @@
 								<td>Incidents Layer</td>
                 {{> BootstrapToggle options=toggle_options var="incidents-checkbox"}}
 							</tr>
+							<tr>
+								<td>Density Layer</td>
+                
+                {{#if densityLayerLoaded}}
+                {{> BootstrapToggle options=toggle_options var="density-checkbox"}}
+                {{else}}
+                <i class="fa fa-info-circle" rel="popover" data-toggle="tooltip" data-placement="bottom" title="{{densityTooltip}}" id='density-layer-tooltip'></i>
+                {{/if}}
+							</tr>
 						</tbody>
 					</table>
-          
 
+
+          {{> rp_settings_density}}
 
       </div>
 

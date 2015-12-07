@@ -9,6 +9,7 @@ Template.map.helpers({
   roadsLayerActice: function (){ return Session.get('roads-checkbox'); },
   roadsLayerActice: function (){ return Session.get('roads-checkbox'); },
   gridLayerActice: function (){ return Session.get('grid-checkbox'); },
+  densityLayerActive: function (){ return Session.get('density-checkbox'); },
   incidentsLayerActice: function (){ return Session.get('incidents-checkbox'); }
 })
 
@@ -61,6 +62,12 @@ Template.map.rendered = function() {
       self.tileLayer = tileLayer
       map.getLayers().insertAt(0,self.tileLayer)
       
+  })
+
+  this.autorun(function() {
+    var graphic = new ol.layer.Image('SJER2013_DSM.tif') 
+    console.log(graphic)
+  map.addLayer(graphic);
   })
 
 
