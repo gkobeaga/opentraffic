@@ -117,7 +117,7 @@ Template.map_density.rendered = function() {
       var nx = Session.get("density-param-ncells")
       var ny = Session.get("density-param-ncells")
 
-      var nycells = nx * ny
+      var ncells = nx * ny
       _.range(0,ncells).forEach( function(poly){
         grid.objects.grid.geometries[poly].properties.value = density.values[poly]
 
