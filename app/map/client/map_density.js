@@ -113,28 +113,39 @@ Template.map_density.rendered = function() {
       var grid = Grids.findOne();
       var density = Density.findOne();
 
-      var ncells = 10000
+
+      var nx = Session.get("density-param-ncells")
+      var ny = Session.get("density-param-ncells")
+
+      var nycells = nx * ny
       _.range(0,ncells).forEach( function(poly){
         grid.objects.grid.geometries[poly].properties.value = density.values[poly]
 
       })
 
 
-
-  
       var features = new ol.format.TopoJSON().readFeatures(grid);
       var source = new ol.source.Vector({
           features:features
       })
 
-      self.densityLayer = new ol.layer.Vector({
+      if (!self.densityLayer) {
+
+        self.densityLayer = new ol.layer.Vector({
           source: source,
           style: styleFunction
-      });
+        });
+      } else {
+        var densityLayer = new ol.layer.Vector({
+          source: source,
+          style: styleFunction
+        });
 
-      console.log(grid)
-      console.log(density)
-      
+        map.removeLayer(self.densityLayer)
+        self.densityLayer = densityLayer
+        
+      }
+
       var nLayers = map.getLayers().getArray().length
       map.getLayers().insertAt(nLayers -1,self.densityLayer)
     }
