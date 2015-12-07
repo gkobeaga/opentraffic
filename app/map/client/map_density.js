@@ -107,8 +107,12 @@ Template.map_density.rendered = function() {
 
         if (!styleCache[cut]) {
 
-        styleCache[cut] = new ol.style.Style({
-            fill : fillFuction(cut)  });
+          styleCache[cut] = new ol.style.Style({
+            fill : fillFuction(cut),
+            stroke: new ol.style.Stroke({
+              width: 0
+            })
+          });
         }
         return [styleCache[cut]];
       
