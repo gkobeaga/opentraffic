@@ -108,10 +108,11 @@ Template.map_density.rendered = function() {
         if (!styleCache[cut]) {
 
           styleCache[cut] = new ol.style.Style({
-            fill : fillFuction(cut),
             stroke: new ol.style.Stroke({
+              color: 'rgba(255, 204, 0, 0)',
               width: 0
-            })
+            }),
+            fill : fillFuction(cut)
           });
         }
         return [styleCache[cut]];
