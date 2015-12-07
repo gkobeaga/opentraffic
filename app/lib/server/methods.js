@@ -328,7 +328,7 @@ Meteor.methods({
   },
 
 
-  getIncidentsHistorical: function() {
+  getIncidentsHistory: function() {
     this.unblock();
 
     var today = new Date();
@@ -347,8 +347,8 @@ Meteor.methods({
   },
 
 
-  updateIncidentsHistorical: function() {
-    Meteor.call('getIncidentsHistorical', function(err, res) {
+  updateIncidentsHistory: function() {
+    Meteor.call('getIncidentsHistory', function(err, res) {
       var data = xml2js.parseStringSync(res).raiz.incidenciaGeolocalizada;
       _.each(data,function(incident) {
 
@@ -462,7 +462,7 @@ Meteor.methods({
         else 
           incidentDoc.latitude = NaN;
 
-        IncidentsHistorical.update(
+        IncidentsHistory.update(
           incidentDoc, 
           { $set: {updated_at : new Date(),level:level},
             $setOnInsert: { created_at: new Date()}
@@ -472,7 +472,7 @@ Meteor.methods({
 
       });
 
-      console.log('Historical Incidents updated ('+ data.length +' incidents).');
+      console.log('Incidents History updated ('+ data.length +' incidents).');
 
     })
   },
@@ -481,7 +481,7 @@ Meteor.methods({
 
     var now = new Date();
       
-      var dailystats = IncidentsHistorical.aggregate([
+      var dailystats = IncidentsHistory.aggregate([
             { 
             $match: {
               date: {$lte: now , $gte: new Date(now - 1000*60*60*24*365)}}
@@ -575,7 +575,7 @@ Meteor.methods({
  updateMonthlyStats: function() {
     var now = new Date();
       
-      var dailystats = IncidentsHistorical.aggregate([
+      var dailystats = IncidentsHistory.aggregate([
             { 
             $match: {
               date: {$gte: new Date(now - 1000*60*60*24*30)}}

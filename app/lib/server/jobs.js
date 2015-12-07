@@ -17,7 +17,7 @@ Meteor.startup(function() {
 
     Meteor.setInterval(function(){
 
-      Meteor.call('updateIncidentsHistorical');
+      Meteor.call('updateIncidentsHistory');
       Meteor.call('updateMonthlyStats');
 
     }, s.hist_incidents_update_interval);

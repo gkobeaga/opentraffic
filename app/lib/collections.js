@@ -3,7 +3,7 @@ GeoInfo = new Mongo.Collection('div_geo_info')
 
 RoadsInfo = new Mongo.Collection('info_roads')
 
-IncidentsHistorical = new Mongo.Collection('incidents_historical');
+IncidentsHistory = new Mongo.Collection('incidents_history');
 IncidentsRealTime = new Mongo.Collection('incidents_realtime');
 
 Dailystats = new Mongo.Collection('dailystats');
