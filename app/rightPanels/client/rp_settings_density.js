@@ -89,6 +89,8 @@ Template.rp_settings_density.events({
     var h0 = Session.get("density-param-h0")
     
     console.log("Ocpu started")
+    Session.set('map-density-layer-loaded',false);
+    Session.set('ocpuActive',true);
     ocpu.call("map_get_density", {
             properties: {
               provinces: provinces,
@@ -104,6 +106,7 @@ Template.rp_settings_density.events({
             }
         }, function(session){
           console.log("Ocpu response")
+          Session.set('ocpuActive',false);
           Session.set('map-density-layer-loaded',true);
         //    session.getObject(function(data){
         //        console.log(data);
