@@ -94,8 +94,12 @@ Template.map_density.rendered = function() {
         if (cut ==ncuts +1 ) {
           return null
         } else {
+          var opacity = 0.5
+          var color = scale(cuts[cut]).rgba()
+          color[3] = opacity
+          console.log(color)
           return  new ol.style.Fill({
-              color: scale(cuts[cut]).hex()
+              color: color
             })
         }
       }
@@ -109,8 +113,7 @@ Template.map_density.rendered = function() {
 
           styleCache[cut] = new ol.style.Style({
             stroke: new ol.style.Stroke({
-              color: 'rgba(255, 204, 0, 0)',
-              width: 0
+              color: 'transparent'
             }),
             fill : fillFuction(cut)
           });
