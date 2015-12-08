@@ -97,7 +97,6 @@ Template.map_density.rendered = function() {
           var opacity = 0.5
           var color = scale(cuts[cut]).rgba()
           color[3] = opacity
-          console.log(color)
           return  new ol.style.Fill({
               color: color
             })
