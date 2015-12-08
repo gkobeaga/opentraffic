@@ -47,16 +47,16 @@ ocpu.seturl("http://opentraffic.bcamath.org/ocpu/library/opentraffic/R")
 //ocpu.seturl("http://localhost/ocpu/library/opentraffic/R")
 
 Template.rp_settings_density.events({
+    'click #ncells-50' : function(event, template) {
+      Session.set('density-param-ncells',50)
+    },
+
     'click #ncells-100' : function(event, template) {
       Session.set('density-param-ncells',100)
     },
 
-    'click #ncells-200' : function(event, template) {
-      Session.set('density-param-ncells',200)
-    },
-
-    'click #ncells-400' : function(event, template) {
-      Session.set('density-param-ncells',400)
+    'click #ncells-150' : function(event, template) {
+      Session.set('density-param-ncells',150)
     },
 
     'click #h0-500' : function(event, template) {
