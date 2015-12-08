@@ -1,6 +1,7 @@
 Session.set("provinces-checkbox", true);
 Session.set("roads-checkbox", false);
 Session.set("incidents-checkbox", true);
+Session.set("density-checkbox", false);
 
 Session.set('map-density-layer-loaded',false);
 
@@ -78,18 +79,19 @@ Template.rp_settings.created = function() {
 }
 
 Template.rp_settings.rendered = function() {
+
    $('#density-layer-tooltip').tooltip() //initialize all tooltips in this template
+
 };
 
 Template.rp_settings.events({
+
     'click #tile-dropdown-osm' : function(event, template) {
       Session.set('map_tile_source','osm')
-      console.log('tile-roads')
     },
 
     'click #tile-dropdown-sat' : function(event, template) {
       Session.set('map_tile_source','sat')
-      console.log('tile-roads')
     }
 });
 

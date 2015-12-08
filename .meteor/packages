@@ -23,8 +23,8 @@ momentjs:moment
 meteor-platform
 nemo64:bootstrap
 williamledoux:bootstrap-toggle
-fortawesome:fontawesome
 danimal:readymanager
+fortawesome:fontawesome
 #danimal:mapmover
 #accounts-google
 #accounts-facebook

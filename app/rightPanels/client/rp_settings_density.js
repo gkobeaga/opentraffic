@@ -73,14 +73,16 @@ Template.rp_settings_density.events({
 
   'click #ocpuCallButton': function(){
     var provinces = []
-    if (Session.get("density-province-araba")) { provinces.push('Araba') }
-    if (Session.get("density-province-bizkaia") ) { provinces.push('Bizkaia') }
-    if (Session.get("density-province-gipuzkoa") ) { provinces.push('Gipuzkoa') }
+    var nprovinces = []
+    Session.get("density-province-araba") ?  provinces.push('Araba') : nprovinces.push('Araba')
+    Session.get("density-province-bizkaia") ?  provinces.push('Bizkaia') : nprovinces.push('Bizkaia')
+    Session.get("density-province-gipuzkoa") ?  provinces.push('Gipuzkoa') : nprovinces.push('Gipuzkoa')
       
     var types = []
-    if (Session.get("density-types-accidents") ) { types.push('accident') }
-    if (Session.get("density-types-roadSafety") ) { types.push('road_safety') }
-    if (Session.get("density-types-roadworks") ) { types.push('roadwork') }
+    var ntypes = []
+    Session.get("density-types-accidents") ? types.push('accident') : ntypes.push('accident') 
+    Session.get("density-types-roadSafety") ? types.push('road_safety') : ntypes.push('road_safety') 
+    Session.get("density-types-roadworks") ? types.push('roadwork') : ntypes.push('roadwork') 
     
     var nx = Session.get("density-param-ncells")
     var ny = Session.get("density-param-ncells")
@@ -89,7 +91,7 @@ Template.rp_settings_density.events({
     var h0 = Session.get("density-param-h0")
     
     console.log("Ocpu started")
-    Session.set('map-density-layer-loaded',false);
+    Session.set('density-checkbox',false);
     Session.set('ocpuActive',true);
     ocpu.call("map_get_density", {
             properties: {
@@ -107,6 +109,7 @@ Template.rp_settings_density.events({
         }, function(session){
           console.log("Ocpu response")
           Session.set('ocpuActive',false);
+          Session.set('density-checkbox',true);
           Session.set('map-density-layer-loaded',true);
         //    session.getObject(function(data){
         //        console.log(data);

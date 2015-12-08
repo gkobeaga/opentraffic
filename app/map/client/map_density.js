@@ -25,7 +25,7 @@ Template.map_density.created = function() {
     
      var gridQuery = {
             "properties.provinces": {"$all" : provinces},
-            "properties.provinces": {"$nin" : provinces},
+            "properties.provinces": {"$nin" : nprovinces},
             "properties.types": {"$in" : types},
             "properties.types": {"$nin" : ntypes},
             "grd_params.nx": nx,
@@ -34,7 +34,7 @@ Template.map_density.created = function() {
 
      var densityQuery = {
             "properties.provinces": {"$all" : provinces},
-            "properties.provinces": {"$nin" : provinces},
+            "properties.provinces": {"$nin" : nprovinces},
             "properties.types": {"$in" : types},
             "properties.types": {"$nin" : ntypes},
             "grd_params.nx": nx,
