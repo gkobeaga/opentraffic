@@ -1,22 +1,8 @@
 <template name="alerts_accidents">
 
+
     <div class="alertTitle pad_group">
-        <div style="font-size:120%;">
-            <table style="width:100%;">
-                <tbody>
-                    <tr>
-                        <td style="text-align:right;">
-
-                            {{date_inputDate fecha}}
-                        
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-
-
+  {{#if existAlerts}}
         {{#each alerts}}
 
         <div>
@@ -32,6 +18,9 @@
             </a>
         </div>
         {{/each}}
+    {{else}}
+      No alerts in this moment
+    {{/if}}
     </div>
 
 

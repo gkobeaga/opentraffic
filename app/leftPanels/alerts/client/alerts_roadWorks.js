@@ -10,9 +10,14 @@ Template.alerts_roadWorks.created = function() {
 
 Template.alerts_roadWorks.helpers({
     alerts: function() {
-        //return RealTimeIncidents.find({},{sort:{created_at:-1}})
         return IncidentsRealTimeByType.find({},{sort: {date: -1}})
+    },
+
+    existAlerts: function() {
+        if(IncidentsRealTimeByType.find().count()>0)
+          return true
     }
+
 })
 
 

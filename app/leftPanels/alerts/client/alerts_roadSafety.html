@@ -1,20 +1,9 @@
 
 <template name="alerts_roadSafety">
 
+
     <div class="alertTitle pad_group">
-        <div style="font-size:120%;">
-            <table style="width:100%;">
-                <tbody>
-                    <tr>
-                        <td style="text-align:right;">
-                            {{date_calendar fecha}}
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-
+  {{#if existAlerts}}
         {{#each alerts}}
         <div>
             <a href="" data-incident_id="{{_id}}"
@@ -23,13 +12,15 @@
             class="userLink light_text">
 
             &bull;&nbsp;
-            <!--{{causa}} {{nombre}}-->
             [{{date_inputDate date}}, {{date_inputTime date}}]
             {{road}} {{sense}} ({{town}}): 
             {{cause}}. {{level}}.
             </a>
           </div>
         {{/each}}
+    {{else}}
+      No alerts in this moment
+    {{/if}}
     </div>
 
 

@@ -11,6 +11,11 @@ Template.alerts_accidents.created = function() {
 Template.alerts_accidents.helpers({
     alerts: function() {
         return IncidentsRealTimeByType.find({},{sort: {date: -1}})
+    },
+
+    existAlerts: function() {
+        if(IncidentsRealTimeByType.find().count()>0)
+          return true
     }
 })
 
