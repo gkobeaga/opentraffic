@@ -36,7 +36,7 @@ mrt:topojson
 mizzao:user-status
 wizonesolutions:underscore-string
 pfafman:nvd3
-#datariot:ganalytics
+datariot:ganalytics
 danimal:cue
 http
 meteorhacks:kadira
