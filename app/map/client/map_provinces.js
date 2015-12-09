@@ -37,7 +37,8 @@ Template.map_provinces.rendered = function() {
         })
 
         self.provinceLayer = new ol.layer.Vector({
-          source: source,
+          name : 'provincesLayer',
+          source : source,
           style: styleArray 
         });
       map.getLayers().insertAt(1,self.provinceLayer)
@@ -48,29 +49,42 @@ Template.map_provinces.rendered = function() {
 	this.autorun(function() {
 	  if (subs.ready('adm') && Session.get('map_created')) {
 
+    var selectedStyle = new ol.style.Style({
+          stroke: new ol.style.Stroke({
+                            color: 'blue',
+                            width: 2})
+    })
 
-    // a normal select interaction to handle click
-    var select = new ol.interaction.Select();
-    map.addInteraction(select);
 
-    select.on('select', function(event) {
-
-      var feature = event.target.getFeatures().item(0) ;
-      if (feature) {
-        var name = feature.get('name');
-        Session.set('selected', {type:'province', name:name});
-    	  Session.set('rp_template', 'rp_info_province')
-      } else {
-        Session.set('selected', {type:'state', name: 'Basque Country'});
-    	  Session.set('rp_template', 'rp_info_state')
-      }
-
-      Session.set('rp_tab','summary');
-
+    var select = new ol.interaction.Select({
+      condition: ol.events.condition.click,
+      style: selectedStyle,
+      layers: function(layer){
+        return layer.get('name') == 'provincesLayer';
+        }
     });
+    
+    if (select !== null) {
+      map.addInteraction(select);
+  
+      select.on('select', function(event) {
+    
+        var feature = event.target.getFeatures().item(0) ;
+        if (feature) {
+          var name = feature.get('name');
+          Session.set('selected', {type:'province', name:name});
+    	    Session.set('rp_template', 'rp_info_province')
+        } else {
+          Session.set('selected', {type:'state', name: 'Basque Country'});
+    	    Session.set('rp_template', 'rp_info_state')
+        }
 
-    var selectedFeatures = select.getFeatures();
+        Session.set('rp_tab','summary');
 
+      });
+
+      var selectedFeatures = select.getFeatures();
+    }
   }
   })
 }
