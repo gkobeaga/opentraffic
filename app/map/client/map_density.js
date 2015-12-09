@@ -68,7 +68,7 @@ Template.map_density.rendered = function() {
       var ncuts = 5;
 
       var styleCache = {};
-      var scale = chroma.scale(['lightyellow', 'navy']).domain(range).classes(ncuts);
+      var scale = chroma.scale(['white', 'yellow','red']).domain(range).classes(ncuts);
       var cuts = scale.classes()
       
       
@@ -94,7 +94,7 @@ Template.map_density.rendered = function() {
         if (cut ==ncuts +1 ) {
           return null
         } else {
-          var opacity = 0.5
+          var opacity = 0.6
           var color = scale(cuts[cut]).rgba()
           color[3] = opacity
           return  new ol.style.Fill({
