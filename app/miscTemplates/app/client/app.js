@@ -73,9 +73,3 @@ Template.app.rendered = function() {
 	}
 	window.onresize()
 }
-
-
-Meteor.startup(function () {
-	Meteor.subscribe('user_data');
-	Meteor.subscribe('myReports');
-})

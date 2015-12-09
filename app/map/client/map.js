@@ -20,7 +20,7 @@ Template.map.rendered = function() {
   var center = ol.proj.transform([-2.5,43.06], 'EPSG:4326', 'EPSG:3857') 
 
   var map_controls = [ 
-    new ol.control.OverviewMap(), 
+    //new ol.control.OverviewMap(), 
     //new ol.control.LayerSwitcher()//,
     //new ol.control.PanZoomBar(),
     //new ol.control.MousePosition()//, 
@@ -29,7 +29,7 @@ Template.map.rendered = function() {
 
   map = new ol.Map({
     layers: [],
-    //controls : [],
+    controls : [],
     target: document.getElementById('map'),
     overlays: [],
     view: new ol.View({

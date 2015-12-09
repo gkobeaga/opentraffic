@@ -4,6 +4,13 @@ Meteor.startup(function() {
     Meteor.call('updateIncidentsRealTime2');
     Meteor.call('updateHourlyStats');
 
+    if (!IncidentsHistory.findOne())
+      Meteor.call('updateIncidentsHistory');
+
+    Meteor.call('updateMonthlyStats');
+    Meteor.call('updateDayOfWeekStats');
+
+      Meteor.call('updateDailyStats');
 
     Meteor.setInterval(function(){
 
@@ -18,6 +25,7 @@ Meteor.startup(function() {
     Meteor.setInterval(function(){
 
       Meteor.call('updateIncidentsHistory');
+      Meteor.call('updateDayOfWeekStats');
       Meteor.call('updateMonthlyStats');
 
     }, s.hist_incidents_update_interval);

@@ -119,7 +119,7 @@ Template.rp_info_state.rendered = function() {
                   .margin({right: 30,left:15})
                   .useInteractiveGuideline(true)    //Tooltips which show all data points. Very nice!
                   .rightAlignYAxis(true)      //Let's move the y-axis to the right side.
-                  .duration(300)
+                  //.duration(300)
                   .showControls(true)     //Allow user to choose 'Stacked', 'Stream', 'Expanded' mode.
                   .clipEdge(true);
 
@@ -128,7 +128,7 @@ Template.rp_info_state.rendered = function() {
               .tickFormat(function(d) { 
                 return d3.time.format('%m/%d')(new Date(d)) 
               });
-            chart.yAxisTickFormat(d3.format(',.0d'));
+            chart.yAxis.tickFormat(d3.format(',.0d'));
 
             chart.legend.margin({top: 2,right:90})
             chart.controls.margin({top: 2,right:180})

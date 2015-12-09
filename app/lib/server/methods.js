@@ -400,7 +400,7 @@ Meteor.methods({
 
         if (!Number.isNaN(incident.fechahora_ini) && incident.fechahora_ini !='' && incident.tipo !='Pruebas deportivas')
 
-          incidentDoc.date = new Date( incident.fechahora_ini[0].substr(0,10) );
+          incidentDoc.date = new Date( incident.fechahora_ini[0] );
         else 
           incidentDoc.date = NaN;
       
@@ -482,6 +482,7 @@ Meteor.methods({
     var now = new Date();
       
       var dailystats = IncidentsHistory.aggregate([
+
             { 
             $match: {
               date: {$lte: now , $gte: new Date(now - 1000*60*60*24*365)}}
@@ -528,13 +529,16 @@ Meteor.methods({
 
     var now = new Date();
       
-      var hourlystats = IncidentsWeek.aggregate([
+      var hourlystats = IncidentsHistory.aggregate([
             { 
               $match: {
+                type : {$in: ['accident','road_safety','roadwork']}
+        /*
                 date: 
                   { $lte: now , 
                     $gte: new Date(now - 1000*60*60*24)
                  }
+          */
               }
             },
             //{$project : {hour_of_day: {$hour : '$date'}}},
@@ -542,7 +546,7 @@ Meteor.methods({
               _id: {
                 type : "$type",
                 province: "$province",
-                hour_of_day: {$hour : '$date'}
+                hour_of_day: {$hour :"$date"}
               },
               count: {$sum: 1}}
           },
@@ -556,15 +560,13 @@ Meteor.methods({
           ]);
 
 			    hourlystats.forEach(function(stat) {
-            var date = stat.year + '-' + stat.month + '-' + stat.day + '08:00:00'
-            stat.date = new Date(date).valueOf()
 
             IncidentsHourlystats.update(
               { type: stat.type,
                 province: stat.province,
                 hour_of_day: stat.hour_of_day
               }, 
-              { $set: {count : stat.count || 0} },
+              { $set: {count : stat.count } },
               { upsert:true }
             );
           });
@@ -572,20 +574,18 @@ Meteor.methods({
           console.log('Hourly incidents stats updated.');
   },
 
- updateMonthlyStats: function() {
+ updateDayOfWeekStats: function() {
     var now = new Date();
       
-      var dailystats = IncidentsHistory.aggregate([
+      var monthlystats = IncidentsHistory.aggregate([
             { 
             $match: {
-              date: {$gte: new Date(now - 1000*60*60*24*30)}}
+              type: {$in: ['accident','road_safety','roadwork']}}
             },
           {$group: {
               _id: {
                 type : "$type",
-                province: "$province",
-                month: {$month: '$date'},
-                year: {$year: '$date'}
+                day_of_week: {$dayOfWeek :"$date"}//,
               },
               count: {$sum: 1}
             }
@@ -593,21 +593,56 @@ Meteor.methods({
           {$project : {
             _id: 0,
             type: "$_id.type",
-            province: "$_id.province",
-            month: "$_id.month",
-            year: "$_id.year" ,
+            day_of_week: "$_id.day_of_week",
             count: "$count"}
           }
           ]);
 
-			    dailystats.forEach(function(stat) {
-            var date = stat.year + '-' + stat.month + '-' + '01 08:00:00'
-            stat.date = new Date(date).valueOf()
+			    monthlystats.forEach(function(stat) {
 
-            IncidentsDailystats.update(
+            IncidentsWeekDaystats.update(
               { type: stat.type,
-                province: stat.province,
-                date: stat.date
+                day_of_week: stat.day_of_week
+              }, 
+              { $set: {count : stat.count || 0} },
+              { upsert:true }
+            );
+          });
+          console.log('Monthly incidents stats updated.');
+
+  },
+
+
+
+ updateMonthlyStats: function() {
+    var now = new Date();
+      
+      var monthlystats = IncidentsHistory.aggregate([
+            { 
+            $match: {
+              type: {$in: ['accident','road_safety','roadwork']}}
+            },
+          {$group: {
+              _id: {
+                type : "$type",
+                month: {$month :"$date"}//,
+              },
+              count: {$sum: 1}
+            }
+          },
+          {$project : {
+            _id: 0,
+            type: "$_id.type",
+            month: "$_id.month",
+            count: "$count"}
+          }
+          ]);
+
+			    monthlystats.forEach(function(stat) {
+
+            IncidentsMonthlyStats.update(
+              { type: stat.type,
+                month: stat.month
               }, 
               { $set: {count : stat.count || 0} },
               { upsert:true }
