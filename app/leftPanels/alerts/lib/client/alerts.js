@@ -1,3 +1,4 @@
+/*
 alertSharedEvents = {
     'click .openAlertButton': function(event, template) {
         if (Template.instance().isOpen.get()) {
@@ -101,3 +102,4 @@ alertSharedRendered = function() {
         }
     }
 }
+*/

@@ -1,20 +1,7 @@
-Alerts = new Meteor.Collection('alerts')
-GlobalAlerts = new Meteor.Collection('globalalerts')
-
-//IncidentsRealTimeByType = new Mongo.Collection('incidents_realtime');
 IncidentsWeek = new Mongo.Collection('incidents_week');
 
 if (Meteor.isClient) {
     // client only collections to hold data for alerts
     IncidentsRealTimeByType = new Mongo.Collection('incidents_realtime_by_type')
 
-    AlertUsers = new Mongo.Collection('alertusers')
-    AlertChatrooms = new Mongo.Collection('alertchatrooms')
-    AlertArmies = new Mongo.Collection('alertarmies')
-    AlertCastles = new Mongo.Collection('alertcastles')
-    AlertVillages = new Mongo.Collection('alertvillages')
-    AlertPreviousDominus = new Mongo.Collection('alertPreviousDominus')
-
-    AlertBattleTitles = new Mongo.Collection('alertbattletitles')
-    UnreadAlerts = new Mongo.Collection('unreadalerts')
 }

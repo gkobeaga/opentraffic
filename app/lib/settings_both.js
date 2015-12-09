@@ -5,7 +5,7 @@ s.version = '0.0.23';
 s.province = {};
 s.incident = {};
 
-s.province.types = [ 'Araba', 'Bizkaia', 'Gipuzkoa','Nafarroa Garaia'];
+s.province.types = [ 'Araba', 'Bizkaia', 'Gipuzkoa'];
 s.incident.types = [ 'accident', 'road_safety', 'roadwork', 'sport', 'port','weather','winter_road','other_incidents'];
 
 s.market = {};

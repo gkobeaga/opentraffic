@@ -48,15 +48,6 @@ Template.stats_panel.rendered = function() {
 
 
 
-			_.each(s.incident.types, function(type) {
-        _.each(s.province.types, function(province) {
-
-          var count = DailystatsProvinceHour.find({type:type,province:province}).fetch()
-                      .map(function(stat) {return stat.count})
-          dStatsProvinceType[type].push({x:province,y:count})
-        })
-			})
-
 			var dHourTypeData = [
 				{values: dStatsHourType.accident, key: 'Accidents'},
 				{values: dStatsHourType.road_safety, key: 'Road Safety'},
@@ -158,6 +149,16 @@ Template.stats_panel.rendered = function() {
 				nv.utils.windowResize(chart.update)
 				return chart
 			})
+
+			_.each(s.incident.types, function(type) {
+        _.each(s.province.types, function(province) {
+
+          var count = DailystatsProvinceHour.find({type:type,province:province}).fetch()
+                      .map(function(stat) {return stat.count})
+          dStatsProvinceType[type].push({x:province,y:count})
+        })
+			})
+
 
 			var dProvinceTypeData = [
 				{values: dStatsProvinceType.accident, key: 'Accidents'},

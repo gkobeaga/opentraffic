@@ -17,62 +17,6 @@ Template.alerts_panel.helpers({
         if (Template.instance().activeTab.get() == 'roadWorks') {
             return 'active'
         }
-    },
-
-
-    sportsActive: function() {
-        if (Template.instance().activeTab.get() == 'sports') {
-            return 'active'
-            //console.log('accidents active');
-        }
-    },
-
-    portsActive: function() {
-        if (Template.instance().activeTab.get() == 'ports') {
-            return 'active'
-        }
-    },
-
-    numUnreadAlerts: function() {
-        return UnreadAlerts.find().count()
-    },
-
-    timeUntilGameEnd: function() {
-        Session.get('refresh_time_field')
-        return moment.duration(moment(new Date(s.game_end)) - moment()).humanize()
-    },
-
-    isGameEndDateSet: function() {
-        var end = Settings.findOne({name: 'gameEndDate'})
-        if (end && end.value != null) {
-            return true
-        } else {
-            return false
-        }
-    },
-
-    isGameOver: function() {
-        var setting = Settings.findOne({name: 'isGameOver'})
-        if (setting) {
-            return setting.value
-        }
-    },
-
-    timeTilGameEndWhenNewDominus: function() {
-        return moment.duration(s.time_til_game_end_when_new_dominus).humanize()
-    },
-
-    gameEndDate: function() {
-        var end = Settings.findOne({name: 'gameEndDate'})
-        return end.value
-    },
-
-    dominus: function() {
-        return RankingsDominus.findOne()
-    },
-
-    previousDominus: function() {
-        return AlertPreviousDominus.findOne()
     }
 })
 
@@ -119,23 +63,10 @@ Template.alerts_panel.events({
     },
 })
 
-
 Template.alerts_panel.created = function() {
     var self = this
 
     self.activeTab = new ReactiveVar('accidents')
-
-    this.autorun(function() {
-        Meteor.subscribe('alertGameEndDate')
-        Meteor.subscribe('isGameOver')
-        Meteor.subscribe('lastDominusUserId')
-        Meteor.subscribe('dominus_rankings')
-
-        var lastDominusUserId = Settings.findOne({name:'lastDominusUserId'})
-        if (lastDominusUserId) {
-            Meteor.subscribe('alertPreviousDominus', lastDominusUserId.value)
-        }
-    })
 
 }
 
